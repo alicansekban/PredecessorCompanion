@@ -1,4 +1,4 @@
-package com.alican.predecessorcompanion.ui.theme
+package com.alican.predecessorcompanion.utils.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

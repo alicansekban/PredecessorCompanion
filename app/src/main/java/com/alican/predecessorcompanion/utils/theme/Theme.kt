@@ -1,4 +1,4 @@
-package com.alican.predecessorcompanion.ui.theme
+package com.alican.predecessorcompanion.utils.theme
 
 import android.app.Activity
 import android.os.Build
