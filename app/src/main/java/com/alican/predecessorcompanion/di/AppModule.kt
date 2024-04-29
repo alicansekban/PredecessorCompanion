@@ -1,10 +1,15 @@
-package com.alican.predecessorcompanion.domain
+package com.alican.predecessorcompanion.di
 
+import android.content.Context
+import androidx.room.Room
 import com.alican.predecessorcompanion.data.WebService
+import com.alican.predecessorcompanion.data.local.AppDatabase
 import com.alican.predecessorcompanion.utils.Constant.BASE_URL
+import com.alican.predecessorcompanion.utils.Constant.ROOM_DATA_BASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -63,12 +68,12 @@ object AppModule {
         .build()
         .create(WebService::class.java)
 
-//    @Provides
-//    @Singleton
-//    fun provideStockDatabase(@ApplicationContext context: Context): AppDatabase {
-//        return Room.databaseBuilder(context, AppDatabase::class.java, ROOM_DATA_BASE_NAME)
-//            .fallbackToDestructiveMigration()
-//            .build()
-//    }
+    @Provides
+    @Singleton
+    fun provideStockDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, ROOM_DATA_BASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 
 }
