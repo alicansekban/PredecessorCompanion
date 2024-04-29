@@ -1,8 +1,5 @@
 package com.alican.predecessorcompanion.custom.navGraphs
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.EaseIn
-import androidx.compose.animation.core.tween
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -10,7 +7,7 @@ import androidx.navigation.compose.navigation
 import com.alican.predecessorcompanion.utils.ScreenRoutes
 
 
-fun NavGraphBuilder.searchNavGraph(
+fun NavGraphBuilder.leaderBoardNavGraph(
     navController: NavController,
     isDarkMode: Boolean,
     shouldBottomBarVisible: (Boolean) -> Unit
@@ -24,11 +21,11 @@ fun NavGraphBuilder.searchNavGraph(
     }
 
     navigation(
-        startDestination = ScreenRoutes.SEARCH_ROUTE,
-        route = ScreenRoutes.SEARCH_HOST_ROUTE
+        startDestination = ScreenRoutes.LEADER_BOARD_ROUTE,
+        route = ScreenRoutes.LEADER_BOARD_HOST_ROUTE
     ) {
         composable(
-            route = ScreenRoutes.SEARCH_ROUTE
+            route = ScreenRoutes.LEADER_BOARD_ROUTE
         ) {
 
         }

@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Leaderboard
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.Museum
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material.icons.outlined.Build
+import androidx.compose.material.icons.outlined.Leaderboard
 import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.material.icons.outlined.Museum
 import androidx.compose.material.icons.outlined.Search
@@ -76,9 +78,9 @@ fun BottomBar(
         ),
         BottomNavigationItem(
             title = "Search",
-            selectedIcon = Icons.Filled.Search,
-            unSelectedIcon = Icons.Outlined.Search,
-            route = ScreenRoutes.SEARCH_HOST_ROUTE
+            selectedIcon = Icons.Filled.Leaderboard,
+            unSelectedIcon = Icons.Outlined.Leaderboard,
+            route = ScreenRoutes.LEADER_BOARD_HOST_ROUTE
         ),
         BottomNavigationItem(
             title = "Saved",
@@ -129,7 +131,7 @@ fun BottomBar(
                         interactionSource = NoRippleInteractionSource,
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = MaterialTheme.colorScheme.primary,
-                            selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+                            selectedTextColor = MaterialTheme.colorScheme.primary,
                             unselectedIconColor = MaterialTheme.colorScheme.onBackground,
                             unselectedTextColor = MaterialTheme.colorScheme.onBackground,
                             indicatorColor = MaterialTheme.colorScheme.background

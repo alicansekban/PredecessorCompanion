@@ -7,14 +7,13 @@ import androidx.compose.animation.core.tween
 import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.alican.predecessorcompanion.custom.navGraphs.buildNavGraph
 import com.alican.predecessorcompanion.custom.navGraphs.homeNavGraph
 import com.alican.predecessorcompanion.custom.navGraphs.moreNavGraph
 import com.alican.predecessorcompanion.custom.navGraphs.savedNavGraph
-import com.alican.predecessorcompanion.custom.navGraphs.searchNavGraph
+import com.alican.predecessorcompanion.custom.navGraphs.leaderBoardNavGraph
 import com.alican.predecessorcompanion.utils.ScreenRoutes
 
 @Composable
@@ -49,7 +48,7 @@ fun MainNavigation(
             isDarkMode = isDarkMode,
             shouldBottomBarVisible = shouldBottomBarVisible
         )
-        searchNavGraph(
+        leaderBoardNavGraph(
             navController = navController,
             isDarkMode = isDarkMode,
             shouldBottomBarVisible = shouldBottomBarVisible

@@ -7,10 +7,10 @@ object ScreenRoutes {
     const val HOME_HOST_ROUTE = "home_host"
     const val HOME_ROUTE = "home"
 
-    // Search Graph
+    // LeaderBoard Graph
 
-    const val SEARCH_HOST_ROUTE = "search_host"
-    const val SEARCH_ROUTE = "search"
+    const val LEADER_BOARD_HOST_ROUTE = "leader_board_host"
+    const val LEADER_BOARD_ROUTE = "leader_board"
 
     // Saved Graph
 
