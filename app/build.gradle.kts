@@ -75,7 +75,8 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
 
     implementation(libs.androidx.hilt.navigation.compose)
-
+    implementation("androidx.compose.material:material-icons-core")
+    implementation("androidx.compose.material:material-icons-extended")
 
     // hilt
     implementation(libs.hilt.android)
