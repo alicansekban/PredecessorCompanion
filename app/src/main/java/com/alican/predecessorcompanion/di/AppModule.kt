@@ -2,7 +2,7 @@ package com.alican.predecessorcompanion.di
 
 import android.content.Context
 import androidx.room.Room
-import com.alican.predecessorcompanion.data.WebService
+import com.alican.predecessorcompanion.data.remote.api.WebService
 import com.alican.predecessorcompanion.data.local.AppDatabase
 import com.alican.predecessorcompanion.utils.Constant.BASE_URL
 import com.alican.predecessorcompanion.utils.Constant.ROOM_DATA_BASE_NAME

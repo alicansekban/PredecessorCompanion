@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.alican.predecessorcompanion.custom.navGraphs.buildNavGraph
-import com.alican.predecessorcompanion.custom.navGraphs.homeNavGraph
+import com.alican.predecessorcompanion.custom.navGraphs.heroesNavGraph
 import com.alican.predecessorcompanion.custom.navGraphs.moreNavGraph
 import com.alican.predecessorcompanion.custom.navGraphs.savedNavGraph
 import com.alican.predecessorcompanion.custom.navGraphs.leaderBoardNavGraph
@@ -27,7 +27,7 @@ fun MainNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ScreenRoutes.HOME_HOST_ROUTE,
+        startDestination = ScreenRoutes.HEROES_HOST_ROUTE,
         modifier = modifier,
         enterTransition = {
             slideIntoContainer(
@@ -43,7 +43,7 @@ fun MainNavigation(
         }
 
     ) {
-        homeNavGraph(
+        heroesNavGraph(
             navController = navController,
             isDarkMode = isDarkMode,
             shouldBottomBarVisible = shouldBottomBarVisible

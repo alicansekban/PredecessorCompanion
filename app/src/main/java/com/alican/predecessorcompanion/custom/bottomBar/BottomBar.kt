@@ -9,17 +9,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Leaderboard
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.Museum
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material.icons.outlined.Build
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Leaderboard
 import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.material.icons.outlined.Museum
-import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -68,16 +67,15 @@ fun BottomBar(
             }
         }
     }
-    val context = LocalContext.current
     val items = listOf(
         BottomNavigationItem(
-            title = "Home",
-            selectedIcon = Icons.Filled.Museum,
-            unSelectedIcon = Icons.Outlined.Museum,
-            route = ScreenRoutes.HOME_ROUTE
+            title = "Heroes",
+            selectedIcon = Icons.Filled.Home,
+            unSelectedIcon = Icons.Outlined.Home,
+            route = ScreenRoutes.HEROES_ROUTE
         ),
         BottomNavigationItem(
-            title = "Search",
+            title = "Leaderboard",
             selectedIcon = Icons.Filled.Leaderboard,
             unSelectedIcon = Icons.Outlined.Leaderboard,
             route = ScreenRoutes.LEADER_BOARD_HOST_ROUTE
@@ -106,7 +104,6 @@ fun BottomBar(
     }
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        //  AdmobBanner()
         AnimatedVisibility(visible = isBottomBarVisible) {
             NavigationBar {
                 items.forEachIndexed { index, item ->

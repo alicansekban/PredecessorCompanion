@@ -2,14 +2,14 @@ package com.alican.predecessorcompanion.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.alican.predecessorcompanion.data.local.dao.ExampleDao
-import com.alican.predecessorcompanion.data.local.entity.ExampleEntity
+import com.alican.predecessorcompanion.data.local.dao.HeroesDao
+import com.alican.predecessorcompanion.data.local.entity.HeroesEntity
 
 @Database(
-    entities = [ExampleEntity::class],
+    entities = [HeroesEntity::class],
     version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun exampleDao(): ExampleDao
+    abstract fun exampleDao(): HeroesDao
 }

@@ -3,9 +3,9 @@ package com.alican.predecessorcompanion.utils
 object ScreenRoutes {
 
     const val BACK_PRESSED = "back_pressed"
-    // Home Graph
-    const val HOME_HOST_ROUTE = "home_host"
-    const val HOME_ROUTE = "home"
+    // Heroes Graph
+    const val HEROES_HOST_ROUTE = "heroes_host"
+    const val HEROES_ROUTE = "heroes"
 
     // LeaderBoard Graph
 
