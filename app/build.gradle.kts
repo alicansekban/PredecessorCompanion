@@ -90,6 +90,8 @@ dependencies {
 
 
 
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
     // Moshi
     implementation(libs.moshi)
     ksp(libs.moshi.kotlin.codegen)

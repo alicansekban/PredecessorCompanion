@@ -1,0 +1,16 @@
+package com.alican.predecessorcompanion.data.remote.dataSource
+
+import com.alican.predecessorcompanion.data.remote.api.WebService
+import com.alican.predecessorcompanion.data.remote.response.heroes.HeroesResponse
+import com.alican.predecessorcompanion.utils.ResultWrapper
+import com.alican.predecessorcompanion.utils.safeApiCall
+import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
+
+class HeroesRemoteDataSource @Inject constructor(
+    private val webService: WebService
+) {
+    suspend fun getHeroes() : ResultWrapper<List<HeroesResponse>> {
+        return safeApiCall(Dispatchers.IO) {webService.getHeroes()}
+    }
+}
