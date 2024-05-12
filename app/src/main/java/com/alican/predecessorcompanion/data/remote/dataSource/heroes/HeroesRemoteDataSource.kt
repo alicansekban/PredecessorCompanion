@@ -1,4 +1,4 @@
-package com.alican.predecessorcompanion.data.remote.dataSource
+package com.alican.predecessorcompanion.data.remote.dataSource.heroes
 
 import com.alican.predecessorcompanion.data.remote.api.WebService
 import com.alican.predecessorcompanion.data.remote.response.heroes.HeroesResponse

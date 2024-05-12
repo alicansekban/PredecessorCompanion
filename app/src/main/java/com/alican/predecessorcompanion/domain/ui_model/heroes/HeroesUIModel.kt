@@ -1,4 +1,4 @@
-package com.alican.predecessorcompanion.domain.ui_model
+package com.alican.predecessorcompanion.domain.ui_model.heroes
 
 data class HeroesUIModel(
     val heroName : String = "",

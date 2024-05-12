@@ -3,7 +3,7 @@ package com.alican.predecessorcompanion.ui.heroes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alican.predecessorcompanion.domain.UIState
-import com.alican.predecessorcompanion.domain.use_case.GetHeroesUseCase
+import com.alican.predecessorcompanion.domain.use_case.heroes.GetHeroesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

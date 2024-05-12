@@ -1,6 +1,6 @@
-package com.alican.predecessorcompanion.data.remote.repository
+package com.alican.predecessorcompanion.data.remote.repository.heroes
 
-import com.alican.predecessorcompanion.data.remote.dataSource.HeroesRemoteDataSource
+import com.alican.predecessorcompanion.data.remote.dataSource.heroes.HeroesRemoteDataSource
 import com.alican.predecessorcompanion.data.remote.response.heroes.HeroesResponse
 import com.alican.predecessorcompanion.utils.ResultWrapper
 import javax.inject.Inject

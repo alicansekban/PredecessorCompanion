@@ -1,7 +1,7 @@
-package com.alican.predecessorcompanion.domain.mapper
+package com.alican.predecessorcompanion.domain.mapper.heroes
 
 import com.alican.predecessorcompanion.data.remote.response.heroes.HeroesResponse
-import com.alican.predecessorcompanion.domain.ui_model.HeroesUIModel
+import com.alican.predecessorcompanion.domain.ui_model.heroes.HeroesUIModel
 
 
 fun HeroesResponse.toUIModel() : HeroesUIModel {

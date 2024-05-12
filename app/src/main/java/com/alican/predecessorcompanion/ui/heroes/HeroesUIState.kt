@@ -1,6 +1,6 @@
 package com.alican.predecessorcompanion.ui.heroes
 
-import com.alican.predecessorcompanion.domain.ui_model.HeroesUIModel
+import com.alican.predecessorcompanion.domain.ui_model.heroes.HeroesUIModel
 
 
 sealed class HeroesUIEvents {

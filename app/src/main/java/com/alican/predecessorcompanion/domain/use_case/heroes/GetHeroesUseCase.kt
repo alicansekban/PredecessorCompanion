@@ -1,9 +1,9 @@
-package com.alican.predecessorcompanion.domain.use_case
+package com.alican.predecessorcompanion.domain.use_case.heroes
 
-import com.alican.predecessorcompanion.data.remote.repository.HeroesRepository
+import com.alican.predecessorcompanion.data.remote.repository.heroes.HeroesRepository
 import com.alican.predecessorcompanion.domain.UIState
-import com.alican.predecessorcompanion.domain.mapper.toUIModel
-import com.alican.predecessorcompanion.domain.ui_model.HeroesUIModel
+import com.alican.predecessorcompanion.domain.mapper.heroes.toUIModel
+import com.alican.predecessorcompanion.domain.ui_model.heroes.HeroesUIModel
 import com.alican.predecessorcompanion.utils.ResultWrapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
