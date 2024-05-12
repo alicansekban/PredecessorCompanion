@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetHeroes @Inject constructor(
+class GetHeroesUseCase @Inject constructor(
     private val heroesRepository: HeroesRepository
 ) {
 
