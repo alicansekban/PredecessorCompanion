@@ -12,13 +12,11 @@ import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Leaderboard
 import androidx.compose.material.icons.filled.MoreHoriz
-import androidx.compose.material.icons.filled.Museum
 import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Leaderboard
 import androidx.compose.material.icons.outlined.MoreHoriz
-import androidx.compose.material.icons.outlined.Museum
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -30,7 +28,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -72,7 +69,7 @@ fun BottomBar(
             title = "Heroes",
             selectedIcon = Icons.Filled.Home,
             unSelectedIcon = Icons.Outlined.Home,
-            route = ScreenRoutes.HEROES_ROUTE
+            route = ScreenRoutes.HOME_ROUTE
         ),
         BottomNavigationItem(
             title = "Leaderboard",
