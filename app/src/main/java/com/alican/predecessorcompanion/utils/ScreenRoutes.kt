@@ -27,4 +27,5 @@ object ScreenRoutes {
 
     const val MORE_HOST_ROUTE = "more_host"
     const val MORE_ROUTE = "more"
+    const val MORE_ITEMS_ROUTE = "more_items"
 }
