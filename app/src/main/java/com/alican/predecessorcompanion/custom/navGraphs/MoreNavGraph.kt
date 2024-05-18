@@ -1,19 +1,15 @@
 package com.alican.predecessorcompanion.custom.navGraphs
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.EaseIn
-import androidx.compose.animation.core.tween
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.alican.predecessorcompanion.ui.more.MoreScreen
 import com.alican.predecessorcompanion.utils.ScreenRoutes
 
 
 fun NavGraphBuilder.moreNavGraph(
     navController: NavController,
-    isDarkMode: Boolean,
-    shouldBottomBarVisible: (Boolean) -> Unit
 ) {
     val navigation: (route: String) -> Unit = { route ->
         if (route == ScreenRoutes.BACK_PRESSED) {
@@ -30,7 +26,16 @@ fun NavGraphBuilder.moreNavGraph(
         composable(
             route = ScreenRoutes.MORE_ROUTE
         ) {
-
+        MoreScreen(navigate = navigation)
+        }
+        composable(
+            route = ScreenRoutes.MORE_ITEMS_ROUTE
+        ) {
+//            (
+//                onBackPressed = {
+//                    navigation(it)
+//                }
+//            )
         }
 
     }
