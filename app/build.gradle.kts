@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    alias(libs.plugins.kotlin.serialization)
 
 }
 
@@ -88,7 +89,7 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
-
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.lifecycle.runtime.compose)
 
