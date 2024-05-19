@@ -1,5 +1,7 @@
 package com.alican.predecessorcompanion.utils
 
+import kotlinx.serialization.Serializable
+
 object ScreenRoutes {
 
     const val BACK_PRESSED = "back_pressed"
@@ -28,4 +30,10 @@ object ScreenRoutes {
     const val MORE_HOST_ROUTE = "more_host"
     const val MORE_ROUTE = "more"
     const val MORE_ITEMS_ROUTE = "more_items"
+
 }
+
+@Serializable
+data class ItemDetail(
+    val id: String
+)
