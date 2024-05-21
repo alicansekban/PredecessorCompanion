@@ -53,7 +53,7 @@ data class ItemsResponseItem(
 	val stats: Stats? = null,
 
 	@Json(name="price")
-	val price: Any? = null,
+	val price: Double? = null,
 
 	@Json(name="name")
 	val name: String? = null,

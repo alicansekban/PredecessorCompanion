@@ -8,7 +8,8 @@ fun ItemsResponseItem.toUIModel(): ItemUIModel {
     return ItemUIModel(
         itemName = this.name ?: "",
         itemImage = Constant.BASE_URL + this.image,
-        itemType = this.rarity ?: "default"
+        itemType = this.rarity ?: "default",
+        itemPrice = this.price ?: 0.0
 
-        )
+    )
 }
