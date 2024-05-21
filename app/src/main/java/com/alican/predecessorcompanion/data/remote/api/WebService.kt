@@ -2,7 +2,7 @@ package com.alican.predecessorcompanion.data.remote.api
 
 import com.alican.predecessorcompanion.data.remote.response.heroes.HeroesResponse
 import com.alican.predecessorcompanion.data.remote.response.heroes_statistics.HeroesStatisticsResponse
-import com.alican.predecessorcompanion.data.remote.response.items.ItemsResponse
+import com.alican.predecessorcompanion.data.remote.response.items.ItemsResponseItem
 import com.alican.predecessorcompanion.data.remote.response.leaderBoard.LeaderBoardResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -24,5 +24,5 @@ interface WebService {
         @Query("hero_ids") heroId : String,
     ) : HeroesStatisticsResponse
     @GET("items.json")
-    suspend fun getItems(): ItemsResponse
+    suspend fun getItems(): List<ItemsResponseItem>
 }

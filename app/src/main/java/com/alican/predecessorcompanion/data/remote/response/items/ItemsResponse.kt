@@ -2,12 +2,6 @@ package com.alican.predecessorcompanion.data.remote.response.items
 
 import com.squareup.moshi.Json
 
-data class ItemsResponse(
-
-	@Json(name="ItemsResponse")
-	val itemsResponse: List<ItemsResponseItem?>? = null
-)
-
 data class EffectsItem(
 
 	@Json(name="menu_description")
@@ -74,7 +68,7 @@ data class ItemsResponseItem(
 	val gameId: Int? = null,
 
 	@Json(name="rarity")
-	val rarity: Any? = null
+	val rarity: String? = null
 )
 
 data class Stats(

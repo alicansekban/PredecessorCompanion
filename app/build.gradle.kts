@@ -114,4 +114,6 @@ dependencies {
     // Coil ImageLoader
     implementation(libs.coil.compose)
     implementation(libs.accompanist.systemuicontroller)
+
+    implementation(libs.kotlinx.collections.immutable)
 }
