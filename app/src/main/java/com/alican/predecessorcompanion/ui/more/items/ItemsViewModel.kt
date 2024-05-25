@@ -19,11 +19,9 @@ class ItemsViewModel @Inject constructor(private val repository: ItemsRepository
         viewModelScope, SharingStarted.WhileSubscribed(),
         ItemsUIStateModel()
     )
-
     init {
         getItems()
     }
-
     private fun getItems() {
         viewModelScope.launch {
             when (val response = repository.getItems()) {
@@ -43,5 +41,4 @@ class ItemsViewModel @Inject constructor(private val repository: ItemsRepository
             }
         }
     }
-
 }
