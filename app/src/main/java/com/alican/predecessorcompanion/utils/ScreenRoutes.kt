@@ -35,5 +35,8 @@ object ScreenRoutes {
 
 @Serializable
 data class ItemDetail(
-    val id: String
+    val name: String
 )
+
+@Serializable
+object ItemsList

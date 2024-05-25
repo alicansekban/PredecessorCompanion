@@ -6,7 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun ItemDetailScreen(modifier: Modifier = Modifier) {
+fun ItemDetailScreen(
+    viewModel: ItemDetailViewModel
+) {
 
     Column(Modifier.fillMaxSize()) {
 
