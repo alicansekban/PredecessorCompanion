@@ -10,6 +10,5 @@ fun ItemsResponseItem.toUIModel(): ItemUIModel {
         itemImage = Constant.BASE_URL + this.image,
         itemType = this.rarity ?: "default",
         itemPrice = this.price ?: 0.0
-
     )
 }

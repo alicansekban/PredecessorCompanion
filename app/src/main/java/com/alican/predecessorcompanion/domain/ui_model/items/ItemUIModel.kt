@@ -4,5 +4,6 @@ data class ItemUIModel(
     val itemName: String = "",
     val itemImage: String = "",
     val itemType: String = "",
-    val itemPrice: Double = 0.0
+    val itemPrice: Double = 0.0,
+
 )

@@ -5,6 +5,7 @@ import com.alican.predecessorcompanion.data.remote.response.heroes_statistics.He
 import com.alican.predecessorcompanion.data.remote.response.items.ItemsResponseItem
 import com.alican.predecessorcompanion.data.remote.response.leaderBoard.LeaderBoardResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface WebService {
@@ -25,4 +26,9 @@ interface WebService {
     ) : HeroesStatisticsResponse
     @GET("items.json")
     suspend fun getItems(): List<ItemsResponseItem>
+
+    @GET("items/{item_name}.json")
+    suspend fun getItemDetails(
+        @Path("item_name") name: String
+    ): ItemsResponseItem
 }

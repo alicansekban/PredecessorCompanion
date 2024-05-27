@@ -33,4 +33,27 @@ class ItemsRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun getItemDetails(name: String): ResultWrapper<ItemUIModel> {
+        return when (val response = safeApiCall(Dispatchers.IO) {
+            webService.getItemDetails(name)
+        }) {
+            is ResultWrapper.GenericError -> response
+            ResultWrapper.Loading -> {
+                ResultWrapper.Loading
+            }
+
+            ResultWrapper.NetworkError -> {
+                ResultWrapper.NetworkError
+            }
+
+            is ResultWrapper.Success -> {
+                val data = response.value
+                val uiModel = data.toUIModel()
+                ResultWrapper.Success(uiModel)
+
+            }
+        }
+    }
+
 }
