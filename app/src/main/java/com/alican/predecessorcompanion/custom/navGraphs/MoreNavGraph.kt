@@ -32,7 +32,7 @@ fun NavGraphBuilder.moreNavGraph(
         composable(
             route = ScreenRoutes.MORE_ROUTE
         ) {
-        MoreScreen(navigate = navigation)
+            MoreScreen(navigate = navigation)
         }
         composable(
             route = ScreenRoutes.MORE_ITEMS_ROUTE
@@ -48,7 +48,10 @@ fun NavGraphBuilder.moreNavGraph(
             val args = it.toRoute<ItemDetail>()
             val viewmodel = hiltViewModel<ItemDetailViewModel>()
             viewmodel.args = args
-            ItemDetailScreen(viewModel = viewmodel)
+            ItemDetailScreen(
+                viewModel = viewmodel,
+                itemDetail = args,
+                onBackClick = { navController.popBackStack() })
         }
     }
 }

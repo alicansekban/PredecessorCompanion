@@ -45,7 +45,6 @@ fun ItemsScreen(
         ) {
             CircularProgressIndicator()
         }
-
     }
     if (uiState.isSuccess) {
         LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
@@ -78,7 +77,7 @@ fun ItemsListItem(item: ItemUIModel, goToDetail: (ItemDetail) -> Unit) {
         ) {
             ImageView(imageUrl = item.itemImage, modifier = Modifier.width(100.dp))
             Column {
-                Text(text = item.itemName)
+                Text(text = item.displayName)
             }
         }
     }

@@ -26,25 +26,25 @@ data class ItemsResponseItem(
 	val image: String? = null,
 
 	@Json(name="hero_class")
-	val heroClass: Any? = null,
+	val hero_class: Any? = null,
 
 	@Json(name="requirements")
 	val requirements: List<Any?>? = null,
 
 	@Json(name="total_price")
-	val totalPrice: Int? = null,
+	val total_price: Int? = null,
 
 	@Json(name="required_level")
-	val requiredLevel: Any? = null,
+	val required_level: Any? = null,
 
 	@Json(name="slot_type")
-	val slotType: String? = null,
+	val slot_type: String? = null,
 
 	@Json(name="display_name")
-	val displayName: String? = null,
+	val display_name: String? = null,
 
 	@Json(name="build_paths")
-	val buildPaths: List<Any?>? = null,
+	val build_paths: List<Any?>? = null,
 
 	@Json(name="effects")
 	val effects: List<EffectsItem?>? = null,
@@ -62,10 +62,10 @@ data class ItemsResponseItem(
 	val id: Int? = null,
 
 	@Json(name="aggression_type")
-	val aggressionType: Any? = null,
+	val aggression_type: String? = null,
 
 	@Json(name="game_id")
-	val gameId: Int? = null,
+	val game_id: Int? = null,
 
 	@Json(name="rarity")
 	val rarity: String? = null

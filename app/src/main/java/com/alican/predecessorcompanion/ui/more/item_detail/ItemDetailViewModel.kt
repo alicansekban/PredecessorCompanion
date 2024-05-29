@@ -25,11 +25,7 @@ class ItemDetailViewModel @Inject constructor(
         ItemDetailUIState()
     )
 
-    init {
-        getDetail()
-    }
-
-    private fun getDetail() {
+    fun getDetail() {
         viewModelScope.launch {
             args?.let {
                 when (val response = repository.getItemDetails(it.name)) {

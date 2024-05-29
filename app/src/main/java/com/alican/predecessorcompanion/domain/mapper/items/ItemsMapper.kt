@@ -7,8 +7,11 @@ import com.alican.predecessorcompanion.utils.Constant
 fun ItemsResponseItem.toUIModel(): ItemUIModel {
     return ItemUIModel(
         itemName = this.name ?: "",
+        displayName = this.display_name ?: "",
         itemImage = Constant.BASE_URL + this.image,
-        itemType = this.rarity ?: "default",
-        itemPrice = this.price ?: 0.0
+        itemType = this.rarity ?: "Default",
+        itemPrice = this.price,
+        slotType = this.slot_type,
+        aggressionType = this.aggression_type
     )
 }
