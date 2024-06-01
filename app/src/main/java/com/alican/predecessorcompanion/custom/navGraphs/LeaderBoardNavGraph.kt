@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.alican.predecessorcompanion.ui.players.PlayersScreen
 import com.alican.predecessorcompanion.utils.ScreenRoutes
 
 
@@ -27,8 +28,7 @@ fun NavGraphBuilder.leaderBoardNavGraph(
         composable(
             route = ScreenRoutes.LEADER_BOARD_ROUTE
         ) {
-
+            PlayersScreen()
         }
-
     }
 }

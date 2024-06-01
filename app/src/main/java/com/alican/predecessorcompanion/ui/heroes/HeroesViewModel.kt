@@ -14,27 +14,34 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HeroesViewModel @Inject constructor(
-    private val getHeroesUseCase: GetHeroesUseCase
-) : ViewModel(){
+    private val getHeroesUseCase: GetHeroesUseCase,
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HeroesUIStateModel())
-    val uiState : StateFlow<HeroesUIStateModel> get() = _uiState.stateIn(viewModelScope,
-        SharingStarted.Eagerly,
-        HeroesUIStateModel()
-    )
+    val uiState: StateFlow<HeroesUIStateModel>
+        get() = _uiState.stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            HeroesUIStateModel()
+        )
+
     init {
         getHeroes()
     }
 
     private fun getHeroes() {
         viewModelScope.launch {
-            getHeroesUseCase.invoke().collect {uiState ->
+            getHeroesUseCase.invoke().collect { uiState ->
                 when (uiState) {
                     is UIState.Empty -> {}
                     is UIState.Error -> {}
                     is UIState.Loading -> {}
                     is UIState.Success -> {
-                        _uiState.value = _uiState.value.copy(heroes = uiState.response, isSuccess = true, isLoading = false)
+                        _uiState.value = _uiState.value.copy(
+                            heroes = uiState.response,
+                            isSuccess = true,
+                            isLoading = false
+                        )
                     }
                 }
             }

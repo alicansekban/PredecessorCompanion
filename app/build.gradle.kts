@@ -118,6 +118,6 @@ dependencies {
     implementation(libs.kotlinx.collections.immutable)
 
     //paging
-    implementation("androidx.paging:paging-runtime:3.2.1")
-    implementation("androidx.paging:paging-compose:3.2.1")
+    implementation("androidx.paging:paging-runtime:3.3.0")
+    implementation("androidx.paging:paging-compose:3.3.0")
 }

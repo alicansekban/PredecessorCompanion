@@ -5,9 +5,9 @@ import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 
 fun LeaderBoardResponse.toUIModel() : PlayersUIModel {
     return PlayersUIModel(
-        name = displayName ?: "",
+        name = display_name ?: "",
         id = id ?: "",
-        rankIcon = rankImage ?: "",
-        rank = rankTitle ?: ""
+        rankIcon = rank_image ?: "",
+        rank = rank_title ?: ""
     )
 }

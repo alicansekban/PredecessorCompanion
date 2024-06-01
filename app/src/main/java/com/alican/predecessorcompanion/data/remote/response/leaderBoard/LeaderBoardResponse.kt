@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 data class LeaderBoardResponse(
 
 	@Json(name="is_active")
-	val isActive: Boolean? = null,
+	val is_active: Boolean? = null,
 
 	@Json(name="mmr")
 	val mmr: Double? = null,
@@ -17,10 +17,10 @@ data class LeaderBoardResponse(
 	val rank: Int? = null,
 
 	@Json(name="rank_active")
-	val rankActive: Int? = null,
+	val rank_active: Int? = null,
 
 	@Json(name="rank_title")
-	val rankTitle: String? = null,
+	val rank_title: String? = null,
 
 	@Json(name="id")
 	val id: String? = null,
@@ -29,13 +29,13 @@ data class LeaderBoardResponse(
 	val isRanked: Boolean? = null,
 
 	@Json(name="display_name")
-	val displayName: String? = null,
+	val display_name: String? = null,
 
 	@Json(name="region")
 	val region: String? = null,
 
 	@Json(name="rank_image")
-	val rankImage: String? = null
+	val rank_image: String? = null
 )
 
 data class FlagsItem(
