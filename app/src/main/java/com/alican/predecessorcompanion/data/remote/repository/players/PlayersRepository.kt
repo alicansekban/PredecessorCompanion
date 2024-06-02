@@ -8,6 +8,8 @@ import com.alican.predecessorcompanion.custom.paging.PlayerPagingSource
 import com.alican.predecessorcompanion.data.remote.api.WebService
 import com.alican.predecessorcompanion.data.remote.dataSource.players.PlayersRemoteDataSource
 import com.alican.predecessorcompanion.data.remote.response.leaderBoard.LeaderBoardResponse
+import com.alican.predecessorcompanion.domain.mapper.players.toUIModel
+import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.utils.ResultWrapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -21,7 +23,7 @@ class PlayersRepository @Inject constructor(
         return remoteDataSource.searchPlayers(searchQuery = searchQuery)
     }
 
-    fun playersPaging(searchQuery: String): Flow<PagingData<PlayerUIModel>> {
+    fun playersPaging(searchQuery: String): Flow<PagingData<PlayersUIModel>> {
         return Pager(PagingConfig(pageSize = 20)) {
             PlayerPagingSource(webService, searchQuery)
         }.flow.map { pagingData ->
@@ -30,12 +32,4 @@ class PlayersRepository @Inject constructor(
             }
         }
     }
-}
-
-data class PlayerUIModel(val name: String = "")
-
-fun LeaderBoardResponse.toUIModel(): PlayerUIModel {
-    return PlayerUIModel(
-        name = this.display_name ?: ""
-    )
 }

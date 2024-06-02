@@ -15,12 +15,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.alican.predecessorcompanion.data.remote.repository.players.PlayerUIModel
+import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 
 @Composable
 fun PlayersScreen(viewModel: PlayersViewModel = hiltViewModel()) {
 
-    val players: LazyPagingItems<PlayerUIModel> = viewModel.players.collectAsLazyPagingItems()
+    val players: LazyPagingItems<PlayersUIModel> = viewModel.players.collectAsLazyPagingItems()
     val listState = rememberLazyGridState()
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -36,7 +36,7 @@ fun PlayersScreen(viewModel: PlayersViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun PlayerItem(player: PlayerUIModel) {
+fun PlayerItem(player: PlayersUIModel) {
     Text(
         text = player.name,
         style = MaterialTheme.typography.bodyMedium,
