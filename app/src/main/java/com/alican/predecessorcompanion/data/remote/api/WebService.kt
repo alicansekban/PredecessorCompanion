@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface WebService {
 
-    @GET("players.json")
+    @GET("players.json?filter[include_inactive]=[0,1]&filter[include_unranked]=[0,1]")
     suspend fun getLeaderBoard(
         @Query("page") page : Int,
         @Query("filter[name]") name : String,

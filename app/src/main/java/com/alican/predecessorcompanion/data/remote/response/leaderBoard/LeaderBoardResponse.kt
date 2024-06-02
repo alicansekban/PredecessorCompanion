@@ -14,10 +14,10 @@ data class LeaderBoardResponse(
 	val flags: List<FlagsItem?>? = null,
 
 	@Json(name="rank")
-	val rank: Int? = null,
+	val rank: String? = null,
 
 	@Json(name="rank_active")
-	val rank_active: Int? = null,
+	val rank_active: String? = null,
 
 	@Json(name="rank_title")
 	val rank_title: String? = null,
