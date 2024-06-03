@@ -16,6 +16,11 @@ interface WebService {
         @Query("filter[name]") name : String,
     ) : List<LeaderBoardResponse>
 
+    @GET("players/{player_id}.json")
+    suspend fun getPlayerDetail(
+        @Path("player_id") player_id : String,
+    ) : LeaderBoardResponse
+
     @GET("heroes.json")
     suspend fun getHeroes() : List<HeroesResponse>
 
@@ -31,4 +36,6 @@ interface WebService {
     suspend fun getItemDetails(
         @Path("item_name") name: String
     ): ItemsResponseItem
+
+
 }
