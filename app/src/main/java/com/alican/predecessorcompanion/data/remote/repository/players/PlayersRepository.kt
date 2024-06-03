@@ -32,4 +32,8 @@ class PlayersRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun getPlayerDetails(playerId: String): ResultWrapper<LeaderBoardResponse> {
+        return remoteDataSource.getPlayerDetail(playerId)
+    }
 }
