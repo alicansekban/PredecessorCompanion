@@ -1,7 +1,9 @@
 package com.alican.predecessorcompanion.ui.players.detail
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alican.predecessorcompanion.domain.UIState
@@ -26,6 +28,6 @@ fun PlayerDetailScreen(viewModel: PlayerDetailViewModel = hiltViewModel()) {
 
 @Composable
 fun StatelessDetailScreen(model: PlayersUIModel) {
-    
+    Text(text = model.name, color = Color.Red)
 
 }

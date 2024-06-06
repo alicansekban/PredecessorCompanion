@@ -1,5 +1,6 @@
 package com.alican.predecessorcompanion.ui.players
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,7 +32,9 @@ import com.alican.predecessorcompanion.custom.image.ImageView
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 
 @Composable
-fun PlayersScreen(viewModel: PlayersViewModel = hiltViewModel()) {
+fun PlayersScreen(
+    viewModel: PlayersViewModel = hiltViewModel(), openPlayerDetail: (String) -> Unit
+) {
 
     val players: LazyPagingItems<PlayersUIModel> = viewModel.players.collectAsLazyPagingItems()
     val listState = rememberLazyListState()
@@ -45,7 +48,7 @@ fun PlayersScreen(viewModel: PlayersViewModel = hiltViewModel()) {
             state = listState
         ) {
             items(players.itemCount) {
-                PlayerItem(player = players[it]!!)
+                PlayerItem(player = players[it]!!, openPlayerDetail = openPlayerDetail)
             }
             item {
                 if (players.loadState.append is LoadState.Error) {
@@ -63,11 +66,14 @@ fun PlayersScreen(viewModel: PlayersViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun PlayerItem(player: PlayersUIModel) {
+fun PlayerItem(player: PlayersUIModel, openPlayerDetail: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(60.dp),
+            .height(60.dp)
+            .clickable {
+                openPlayerDetail(player.id)
+            },
         elevation = CardDefaults.cardElevation(6.dp),
         shape = RoundedCornerShape(10.dp),
     ) {

@@ -20,7 +20,7 @@ class PlayerDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val playerId = checkNotNull(savedStateHandle.get<String>("playerId"))
+    private val playerId = checkNotNull(savedStateHandle.get<String>("player_id"))
 
     private val _detailState = MutableStateFlow<UIState<PlayersUIModel>>(UIState.Empty())
     val detailState: StateFlow<UIState<PlayersUIModel>>
@@ -30,10 +30,10 @@ class PlayerDetailViewModel @Inject constructor(
         )
 
     init {
-        getPLayerDetail()
+        getPlayerDetail()
     }
 
-    private fun getPLayerDetail() {
+    private fun getPlayerDetail() {
         viewModelScope.launch {
             useCase.invoke(playerId).collect {
                 _detailState.emit(it)
