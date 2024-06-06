@@ -14,6 +14,7 @@ object ScreenRoutes {
 
     const val LEADER_BOARD_HOST_ROUTE = "leader_board_host"
     const val LEADER_BOARD_ROUTE = "leader_board"
+    const val PLAYER_DETAIL_ROUTE = "player_detail_route/{player_id}"
 
     // Saved Graph
 
