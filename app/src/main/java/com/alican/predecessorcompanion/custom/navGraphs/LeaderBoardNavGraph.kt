@@ -32,7 +32,10 @@ fun NavGraphBuilder.leaderBoardNavGraph(
             route = ScreenRoutes.LEADER_BOARD_ROUTE
         ) {
             PlayersScreen(openPlayerDetail = { playerId ->
-                val route = ScreenRoutes.PLAYER_DETAIL_ROUTE.replace(oldValue = "{player_id}", newValue = playerId)
+                val route = ScreenRoutes.PLAYER_DETAIL_ROUTE.replace(
+                    oldValue = "{player_id}",
+                    newValue = playerId
+                )
                 navController.navigate(route)
             })
         }
@@ -42,7 +45,7 @@ fun NavGraphBuilder.leaderBoardNavGraph(
                 type = NavType.StringType
             })
         ) {
-            PlayerDetailScreen()
+            PlayerDetailScreen(onBackClick = { navController.popBackStack() })
         }
     }
 }
