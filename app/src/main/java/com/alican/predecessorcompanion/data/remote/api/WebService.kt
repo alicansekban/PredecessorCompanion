@@ -4,6 +4,7 @@ import com.alican.predecessorcompanion.data.remote.response.heroes.HeroesRespons
 import com.alican.predecessorcompanion.data.remote.response.heroes_statistics.HeroesStatisticsResponse
 import com.alican.predecessorcompanion.data.remote.response.items.ItemsResponseItem
 import com.alican.predecessorcompanion.data.remote.response.leaderBoard.LeaderBoardResponse
+import com.alican.predecessorcompanion.data.remote.response.player.PlayerStatisticsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -20,6 +21,11 @@ interface WebService {
     suspend fun getPlayerDetail(
         @Path("player_id") player_id : String,
     ) : LeaderBoardResponse
+
+    @GET("players/{player_id}/statistics.json")
+    suspend fun getPlayerStatistics(
+        @Path("player_id") player_id : String,
+    ) : PlayerStatisticsResponse
 
     @GET("heroes.json")
     suspend fun getHeroes() : List<HeroesResponse>
