@@ -42,36 +42,37 @@ fun PlayerDetailScreen(
 
     val detailState by viewModel.detailState.collectAsStateWithLifecycle()
 
+    Box(modifier = Modifier.fillMaxSize()) {
+        when (detailState) {
+            is UIState.Empty -> {
+                Text(
+                    text = "No player data available.",
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.Gray,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
 
-    when (detailState) {
-        is UIState.Empty -> {
-            Text(
-                text = "No player data available.",
-                modifier = Modifier.fillMaxSize(),
-                color = Color.Gray,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center
-            )
-        }
+            is UIState.Error -> {
+                val errorMessage = (detailState as UIState.Error).errorMessage
+                Text(
+                    text = "Error: $errorMessage",
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.Red,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
 
-        is UIState.Error -> {
-            val errorMessage = (detailState as UIState.Error).errorMessage
-            Text(
-                text = "Error: $errorMessage",
-                modifier = Modifier.fillMaxSize(),
-                color = Color.Red,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center
-            )
-        }
+            is UIState.Loading -> {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
 
-        is UIState.Loading -> {
-            CircularProgressIndicator()
-        }
-
-        is UIState.Success -> {
-            val response = (detailState as UIState.Success<PlayersUIModel>).response
-            StatelessDetailScreen(response, onBackClick = onBackClick)
+            is UIState.Success -> {
+                val response = (detailState as UIState.Success<PlayersUIModel>).response
+                StatelessDetailScreen(response, onBackClick = onBackClick)
+            }
         }
     }
 }
