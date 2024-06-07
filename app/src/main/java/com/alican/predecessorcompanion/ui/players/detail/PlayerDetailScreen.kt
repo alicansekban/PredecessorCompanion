@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.NavigateBefore
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,6 +23,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,13 +42,37 @@ fun PlayerDetailScreen(
 
     val detailState by viewModel.detailState.collectAsStateWithLifecycle()
 
-    when (detailState) {
-        is UIState.Empty -> {}
-        is UIState.Error -> {}
-        is UIState.Loading -> {}
-        is UIState.Success -> {
-            val response = (detailState as UIState.Success<PlayersUIModel>).response
-            StatelessDetailScreen(response, onBackClick = onBackClick)
+    Box(modifier = Modifier.fillMaxSize()) {
+        when (detailState) {
+            is UIState.Empty -> {
+                Text(
+                    text = "No player data available.",
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.Gray,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            is UIState.Error -> {
+                val errorMessage = (detailState as UIState.Error).errorMessage
+                Text(
+                    text = "Error: $errorMessage",
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.Red,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            is UIState.Loading -> {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+
+            is UIState.Success -> {
+                val response = (detailState as UIState.Success<PlayersUIModel>).response
+                StatelessDetailScreen(response, onBackClick = onBackClick)
+            }
         }
     }
 }
@@ -92,7 +118,7 @@ fun StatelessDetailScreen(model: PlayersUIModel, onBackClick: () -> Unit) {
                     overflow = TextOverflow.Ellipsis
                 )
 
-                val formattedMmr = String.format(Locale.ROOT,"%.4f", model.mmr).take(4)
+                val formattedMmr = String.format(Locale.ROOT, "%.4f", model.mmr).take(4)
                 Text(
                     modifier = Modifier.padding(vertical = 4.dp),
                     text = formattedMmr,
