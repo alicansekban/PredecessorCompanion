@@ -24,7 +24,7 @@ class PlayerHeroStatisticsUseCase @Inject constructor(
                     ResultWrapper.Loading -> UIState.Loading()
                     ResultWrapper.NetworkError -> UIState.Error(errorMessage = "Network Error")
                     is ResultWrapper.Success -> {
-                        val playerHeroes = result.value.heroStatistics?.map { it.toUIModel() }
+                        val playerHeroes = result.value.hero_statistics?.map { it.toUIModel() }
                         playerHeroes?.let {
                             UIState.Success(playerHeroes)
                         } ?: run {

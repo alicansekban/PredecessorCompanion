@@ -47,7 +47,8 @@ fun HeroStatisticsItem.toUIModel(): PlayerHeroStatisticsUIModel {
         largestKillingSpree = largest_killing_spree ?: 0,
         totalPerfScore = total_performance_score ?: 0.0,
         avgPerfScore = avg_performance_score ?: 0.0,
-        maxPerfScore = max_performance_score ?: 0.0
+        maxPerfScore = max_performance_score ?: 0.0,
+        heroName = display_name ?: ""
     )
 }
 

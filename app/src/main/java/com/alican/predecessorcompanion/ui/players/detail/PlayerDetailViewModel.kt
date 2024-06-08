@@ -24,7 +24,7 @@ class PlayerDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val playerId = checkNotNull(savedStateHandle.get<String>("player_id"))
+    val playerId = checkNotNull(savedStateHandle.get<String>("player_id"))
 
     private val _detailState = MutableStateFlow<UIState<PlayersUIModel>>(UIState.Empty())
 

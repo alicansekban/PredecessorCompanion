@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 data class PlayerHeroStatisticsResponse(
 
 	@Json(name="hero_statistics")
-	val heroStatistics: List<HeroStatisticsItem>? = null
+	val hero_statistics: List<HeroStatisticsItem>? = null
 )
 
 data class HeroStatisticsItem(

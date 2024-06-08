@@ -71,7 +71,7 @@ data class PlayersItem(
 	val minionsKilled: Int? = null,
 
 	@Json(name="rank")
-	val rank: Double? = null,
+	val rank: String? = null,
 
 	@Json(name="neutral_minions_team_jungle")
 	val neutralMinionsTeamJungle: Int? = null,
@@ -150,9 +150,6 @@ data class PlayersItem(
 
 	@Json(name="mmr_change")
 	val mmrChange: Double? = null,
-
-	@Json(name="flags")
-	val flags: List<Double?>? = null,
 
 	@Json(name="neutral_minions_killed")
 	val neutralMinionsKilled: Int? = null,

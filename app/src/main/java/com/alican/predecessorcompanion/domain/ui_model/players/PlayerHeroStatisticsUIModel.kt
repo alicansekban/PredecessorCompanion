@@ -9,5 +9,6 @@ data class PlayerHeroStatisticsUIModel(
     val largestKillingSpree: Int = 0,
     val totalPerfScore: Double = 0.0,
     val avgPerfScore: Double = 0.0,
-    val maxPerfScore: Double = 0.0
+    val maxPerfScore: Double = 0.0,
+    val heroName: String = ""
 )

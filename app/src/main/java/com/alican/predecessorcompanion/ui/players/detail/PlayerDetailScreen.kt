@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,6 +34,7 @@ import com.alican.predecessorcompanion.custom.image.ImageView
 import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayerStatisticsUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
+import com.alican.predecessorcompanion.ui.players.statistics.PlayerStatisticsScreen
 import java.util.Locale
 
 @Composable
@@ -72,7 +74,12 @@ fun PlayerDetailScreen(
 
             is UIState.Success -> {
                 val response = (detailState as UIState.Success<PlayersUIModel>).response
-                StatelessDetailScreen(response, uiState.statistics, onBackClick = onBackClick)
+                StatelessDetailScreen(
+                    response,
+                    uiState.statistics,
+                    onBackClick = onBackClick,
+                    playerId = viewModel.playerId
+                )
             }
         }
     }
@@ -82,7 +89,8 @@ fun PlayerDetailScreen(
 fun StatelessDetailScreen(
     model: PlayersUIModel,
     statistic: PlayerStatisticsUIModel,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    playerId: String
 ) {
     Box(Modifier.fillMaxSize()) {
         Column(
@@ -113,6 +121,13 @@ fun StatelessDetailScreen(
                     .background(MaterialTheme.colorScheme.primaryContainer),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                PlayerStatisticsScreen(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, start = 20.dp),
+                    playerId = playerId
+                )
+
 
                 Text(
                     modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
@@ -132,8 +147,8 @@ fun StatelessDetailScreen(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(text = model.rankTitle)
-
             }
+
         }
         Icon(imageVector = Icons.AutoMirrored.Filled.NavigateBefore,
             "",
