@@ -8,6 +8,7 @@ import com.alican.predecessorcompanion.custom.paging.PlayerPagingSource
 import com.alican.predecessorcompanion.data.remote.api.WebService
 import com.alican.predecessorcompanion.data.remote.dataSource.players.PlayersRemoteDataSource
 import com.alican.predecessorcompanion.data.remote.response.leaderBoard.LeaderBoardResponse
+import com.alican.predecessorcompanion.data.remote.response.player.PlayerHeroStatisticsResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerStatisticsResponse
 import com.alican.predecessorcompanion.domain.mapper.players.toUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
@@ -40,5 +41,9 @@ class PlayersRepository @Inject constructor(
 
     suspend fun getPlayerStatistics(playerId: String): ResultWrapper<PlayerStatisticsResponse> {
         return remoteDataSource.getPlayerStatistics(playerId)
+    }
+
+    suspend fun getPlayerHeroStatistics(playerId: String): ResultWrapper<PlayerHeroStatisticsResponse>{
+        return remoteDataSource.getPlayerHeroStatistics(playerId)
     }
 }

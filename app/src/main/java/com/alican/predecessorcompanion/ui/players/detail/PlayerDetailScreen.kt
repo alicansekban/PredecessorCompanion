@@ -31,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alican.predecessorcompanion.custom.image.ImageView
 import com.alican.predecessorcompanion.domain.UIState
+import com.alican.predecessorcompanion.domain.ui_model.players.PlayerStatisticsUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import java.util.Locale
 
@@ -39,7 +40,7 @@ fun PlayerDetailScreen(
     viewModel: PlayerDetailViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val detailState by viewModel.detailState.collectAsStateWithLifecycle()
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -71,14 +72,18 @@ fun PlayerDetailScreen(
 
             is UIState.Success -> {
                 val response = (detailState as UIState.Success<PlayersUIModel>).response
-                StatelessDetailScreen(response, onBackClick = onBackClick)
+                StatelessDetailScreen(response, uiState.statistics, onBackClick = onBackClick)
             }
         }
     }
 }
 
 @Composable
-fun StatelessDetailScreen(model: PlayersUIModel, onBackClick: () -> Unit) {
+fun StatelessDetailScreen(
+    model: PlayersUIModel,
+    statistic: PlayerStatisticsUIModel,
+    onBackClick: () -> Unit
+) {
     Box(Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
