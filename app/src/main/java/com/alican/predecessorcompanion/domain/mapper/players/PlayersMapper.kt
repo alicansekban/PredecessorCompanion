@@ -2,9 +2,11 @@ package com.alican.predecessorcompanion.domain.mapper.players
 
 import com.alican.predecessorcompanion.data.remote.response.leaderBoard.LeaderBoardResponse
 import com.alican.predecessorcompanion.data.remote.response.player.HeroStatisticsItem
+import com.alican.predecessorcompanion.data.remote.response.player.MatchesItem
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerStatisticsResponse
 import com.alican.predecessorcompanion.domain.ui_model.players.FavHeroUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayerHeroStatisticsUIModel
+import com.alican.predecessorcompanion.domain.ui_model.players.PlayerMatchesUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayerStatisticsUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.utils.Constant
@@ -44,5 +46,14 @@ fun HeroStatisticsItem.toUIModel(): PlayerHeroStatisticsUIModel {
         totalPerfScore = total_performance_score ?: 0.0,
         avgPerfScore = avg_performance_score ?: 0.0,
         maxPerfScore = max_performance_score ?: 0.0
+    )
+}
+
+fun MatchesItem.toUIModel() : PlayerMatchesUIModel{
+    return PlayerMatchesUIModel(
+        gameMode = gameMode ?: "",
+        matchId = this.id ?: "",
+        region = region ?: "",
+        gameDuration = gameDuration.toString()
     )
 }
