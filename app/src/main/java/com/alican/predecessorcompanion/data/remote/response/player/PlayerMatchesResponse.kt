@@ -32,19 +32,19 @@ data class MatchesItem(
 	val endTime: String? = null,
 
 	@Json(name="game_region")
-	val gameRegion: String? = null,
+	val game_region: String? = null,
 
 	@Json(name="winning_team")
 	val winningTeam: String? = null,
 
 	@Json(name="game_mode")
-	val gameMode: String? = null,
+	val game_mode: String? = null,
 
 	@Json(name="id")
 	val id: String? = null,
 
 	@Json(name="game_duration")
-	val gameDuration: Int? = null,
+	val game_duration: Int? = null,
 
 	@Json(name="region")
 	val region: String? = null

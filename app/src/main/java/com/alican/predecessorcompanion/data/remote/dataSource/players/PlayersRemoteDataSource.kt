@@ -2,6 +2,7 @@ package com.alican.predecessorcompanion.data.remote.dataSource.players
 
 import com.alican.predecessorcompanion.data.remote.api.WebService
 import com.alican.predecessorcompanion.data.remote.response.leaderBoard.LeaderBoardResponse
+import com.alican.predecessorcompanion.data.remote.response.player.PlayerCommonTeammatesResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerHeroStatisticsResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerMatchesResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerStatisticsResponse
@@ -31,5 +32,9 @@ class PlayersRemoteDataSource @Inject constructor(
 
     suspend fun getPlayerMatches(playerId: String) : ResultWrapper<PlayerMatchesResponse> {
         return safeApiCall(Dispatchers.IO) {webService.getPlayerMatches(playerId)}
+    }
+
+    suspend fun getPlayerTeammates(playerId: String) : ResultWrapper<PlayerCommonTeammatesResponse> {
+        return safeApiCall(Dispatchers.IO) {webService.getPlayerTeammates(playerId)}
     }
 }

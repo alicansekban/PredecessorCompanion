@@ -4,10 +4,12 @@ import com.alican.predecessorcompanion.data.remote.response.leaderBoard.LeaderBo
 import com.alican.predecessorcompanion.data.remote.response.player.HeroStatisticsItem
 import com.alican.predecessorcompanion.data.remote.response.player.MatchesItem
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerStatisticsResponse
+import com.alican.predecessorcompanion.data.remote.response.player.TeammatesItem
 import com.alican.predecessorcompanion.domain.ui_model.players.FavHeroUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayerHeroStatisticsUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayerMatchesUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayerStatisticsUIModel
+import com.alican.predecessorcompanion.domain.ui_model.players.PlayerTeammateUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.utils.Constant
 
@@ -51,9 +53,18 @@ fun HeroStatisticsItem.toUIModel(): PlayerHeroStatisticsUIModel {
 
 fun MatchesItem.toUIModel() : PlayerMatchesUIModel{
     return PlayerMatchesUIModel(
-        gameMode = gameMode ?: "",
+        gameMode = game_mode ?: "",
         matchId = this.id ?: "",
         region = region ?: "",
-        gameDuration = gameDuration.toString()
+        gameDuration = game_duration.toString()
+    )
+}
+
+fun TeammatesItem.toUIModel(): PlayerTeammateUIModel{
+    return PlayerTeammateUIModel(
+        matchesPercentage = matches_percentage.toString(),
+        matchesPlayed = matches_played.toString(),
+        winRate = winrate.toString(),
+        name = display_name ?: ""
     )
 }

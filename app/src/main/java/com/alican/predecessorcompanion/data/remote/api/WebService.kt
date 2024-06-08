@@ -4,6 +4,7 @@ import com.alican.predecessorcompanion.data.remote.response.heroes.HeroesRespons
 import com.alican.predecessorcompanion.data.remote.response.heroes_statistics.HeroesStatisticsResponse
 import com.alican.predecessorcompanion.data.remote.response.items.ItemsResponseItem
 import com.alican.predecessorcompanion.data.remote.response.leaderBoard.LeaderBoardResponse
+import com.alican.predecessorcompanion.data.remote.response.player.PlayerCommonTeammatesResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerHeroStatisticsResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerMatchesResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerStatisticsResponse
@@ -39,6 +40,11 @@ interface WebService {
         @Path("player_id") player_id: String,
     ): PlayerMatchesResponse
 
+    @GET("players/{player_id}/common_teammates.json")
+    suspend fun getPlayerTeammates(
+        @Path("player_id") player_id: String,
+    ): PlayerCommonTeammatesResponse
+
     @GET("heroes.json")
     suspend fun getHeroes(): List<HeroesResponse>
 
@@ -55,6 +61,4 @@ interface WebService {
     suspend fun getItemDetails(
         @Path("item_name") name: String
     ): ItemsResponseItem
-
-
 }
