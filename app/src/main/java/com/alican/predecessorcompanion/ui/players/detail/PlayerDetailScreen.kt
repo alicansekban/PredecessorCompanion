@@ -32,7 +32,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alican.predecessorcompanion.custom.image.ImageView
 import com.alican.predecessorcompanion.domain.UIState
-import com.alican.predecessorcompanion.domain.ui_model.players.PlayerStatisticsUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.ui.players.statistics.PlayerStatisticsScreen
 import java.util.Locale
@@ -76,7 +75,6 @@ fun PlayerDetailScreen(
                 val response = (detailState as UIState.Success<PlayersUIModel>).response
                 StatelessDetailScreen(
                     response,
-                    uiState.statistics,
                     onBackClick = onBackClick,
                     playerId = viewModel.playerId
                 )
@@ -88,7 +86,6 @@ fun PlayerDetailScreen(
 @Composable
 fun StatelessDetailScreen(
     model: PlayersUIModel,
-    statistic: PlayerStatisticsUIModel,
     onBackClick: () -> Unit,
     playerId: String
 ) {
@@ -127,8 +124,6 @@ fun StatelessDetailScreen(
                         .padding(top = 16.dp, start = 20.dp),
                     playerId = playerId
                 )
-
-
                 Text(
                     modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
                     text = model.name,
