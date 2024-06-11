@@ -27,7 +27,7 @@ class ItemDetailViewModel @Inject constructor(
 
     fun getDetail() {
         viewModelScope.launch {
-            args?.let {
+            args?.let { it ->
                 when (val response = repository.getItemDetails(it.name)) {
                     is ResultWrapper.GenericError -> {
                         _uiState.update {
