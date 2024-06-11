@@ -116,4 +116,8 @@ dependencies {
     implementation(libs.accompanist.systemuicontroller)
 
     implementation(libs.kotlinx.collections.immutable)
+
+    //paging
+    implementation("androidx.paging:paging-runtime:3.3.0")
+    implementation("androidx.paging:paging-compose:3.3.0")
 }
