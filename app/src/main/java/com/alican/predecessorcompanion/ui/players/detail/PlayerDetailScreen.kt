@@ -33,9 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alican.predecessorcompanion.custom.image.ImageView
 import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
-import com.alican.predecessorcompanion.ui.players.matches.PlayerMatchesScreen
 import com.alican.predecessorcompanion.ui.players.statistics.PlayerStatisticsScreen
-import com.alican.predecessorcompanion.ui.players.teammates.PlayerTeammatesScreen
 import java.util.Locale
 
 @Composable
@@ -132,16 +130,6 @@ fun StatelessDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp, start = 20.dp),
-                    playerId = playerId
-                )
-                PlayerMatchesScreen(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    playerId = playerId
-                )
-                PlayerTeammatesScreen(
-                    modifier = Modifier
-                        .fillMaxWidth(),
                     playerId = playerId
                 )
 
