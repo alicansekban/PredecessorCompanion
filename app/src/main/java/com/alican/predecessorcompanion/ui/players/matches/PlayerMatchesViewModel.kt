@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @HiltViewModel
 class PlayerMatchesViewModel @Inject constructor(
     private val playerMatchesUseCase: PlayerMatchesUseCase

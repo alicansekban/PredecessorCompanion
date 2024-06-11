@@ -1,4 +1,4 @@
-package com.alican.predecessorcompanion.ui.players.matches
+package com.alican.predecessorcompanion.ui.players.teammates
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,22 +14,22 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alican.predecessorcompanion.domain.UIState
-import com.alican.predecessorcompanion.domain.ui_model.players.PlayerMatchesUIModel
+import com.alican.predecessorcompanion.domain.ui_model.players.PlayerTeammateUIModel
 
 @Composable
-fun PlayerMatchesScreen(
+fun PlayerTeammatesScreen(
     modifier: Modifier = Modifier,
     playerId: String,
-    viewModel: PlayerMatchesViewModel = hiltViewModel()
+    viewModel: PlayerTeammatesViewModel = hiltViewModel()
 ) {
     LaunchedEffect(key1 = playerId) {
-        viewModel.getMatches(playerId = playerId)
+        viewModel.getTeammates(playerId = playerId)
     }
 
-    val statistics by viewModel.matches.collectAsStateWithLifecycle()
+    val teammates by viewModel.teammates.collectAsStateWithLifecycle()
 
     Column(modifier = modifier) {
-        when (statistics) {
+        when (teammates) {
             is UIState.Empty -> {}
             is UIState.Error -> {}
             is UIState.Loading -> {
@@ -39,8 +39,8 @@ fun PlayerMatchesScreen(
             }
 
             is UIState.Success -> {
-                val response = (statistics as UIState.Success<List<PlayerMatchesUIModel>>).response
-                StatelessMatches(matches = response)
+                val response = (teammates as UIState.Success<List<PlayerTeammateUIModel>>).response
+                StatelessTeammates(teammates = response)
             }
         }
     }
@@ -48,16 +48,13 @@ fun PlayerMatchesScreen(
 
 
 @Composable
-fun StatelessMatches(
+fun StatelessTeammates(
     modifier: Modifier = Modifier,
-    matches: List<PlayerMatchesUIModel>
+    teammates: List<PlayerTeammateUIModel>
 ) {
     Column(modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-        matches.forEach { match ->
-            Text(
-                text = match.gameMode
-            )
+        teammates.forEach { teammate ->
+            Text(text = teammate.name)
         }
     }
 }
-

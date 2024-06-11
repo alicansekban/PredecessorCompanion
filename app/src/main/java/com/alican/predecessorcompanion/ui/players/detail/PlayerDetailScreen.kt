@@ -35,6 +35,7 @@ import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.ui.players.matches.PlayerMatchesScreen
 import com.alican.predecessorcompanion.ui.players.statistics.PlayerStatisticsScreen
+import com.alican.predecessorcompanion.ui.players.teammates.PlayerTeammatesScreen
 import java.util.Locale
 
 @Composable
@@ -119,6 +120,14 @@ fun StatelessDetailScreen(
                     .background(MaterialTheme.colorScheme.primaryContainer),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                Text(
+                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
+                    text = model.name,
+                    fontSize = 20.sp,
+                    maxLines = 1,
+                    fontWeight = FontWeight.Bold,
+                    overflow = TextOverflow.Ellipsis
+                )
                 PlayerStatisticsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -127,16 +136,13 @@ fun StatelessDetailScreen(
                 )
                 PlayerMatchesScreen(
                     modifier = Modifier
-                    .fillMaxWidth(),
+                        .fillMaxWidth(),
                     playerId = playerId
                 )
-                Text(
-                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
-                    text = model.name,
-                    fontSize = 20.sp,
-                    maxLines = 1,
-                    fontWeight = FontWeight.Bold,
-                    overflow = TextOverflow.Ellipsis
+                PlayerTeammatesScreen(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    playerId = playerId
                 )
 
                 val formattedMmr = String.format(Locale.ROOT, "%.4f", model.mmr).take(4)
