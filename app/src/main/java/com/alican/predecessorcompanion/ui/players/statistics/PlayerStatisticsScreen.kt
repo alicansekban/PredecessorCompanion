@@ -27,10 +27,10 @@ fun PlayerStatisticsScreen(
         viewModel.getStatistics(playerId = playerId)
     }
 
-    val teammates by viewModel.statistics.collectAsStateWithLifecycle()
+    val statistics by viewModel.statistics.collectAsStateWithLifecycle()
 
     Column(modifier = modifier) {
-        when (teammates) {
+        when (statistics) {
             is UIState.Empty -> {}
             is UIState.Error -> {}
             is UIState.Loading -> {
@@ -40,7 +40,7 @@ fun PlayerStatisticsScreen(
             }
 
             is UIState.Success -> {
-                val response = (teammates as UIState.Success<PlayerStatisticsUIModel>).response
+                val response = (statistics as UIState.Success<PlayerStatisticsUIModel>).response
                 StatelessStatistics(statistics = response)
             }
         }

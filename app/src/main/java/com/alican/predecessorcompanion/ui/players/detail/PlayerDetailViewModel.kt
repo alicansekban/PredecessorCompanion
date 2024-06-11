@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.domain.use_case.players.PlayerDetailUseCase
-import com.alican.predecessorcompanion.domain.use_case.players.PlayerStatisticsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class PlayerDetailViewModel @Inject constructor(
     private val getPlayerDetails: PlayerDetailUseCase,
-    private val getPlayerStatistics: PlayerStatisticsUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -49,5 +47,4 @@ class PlayerDetailViewModel @Inject constructor(
             }
         }
     }
-
 }
