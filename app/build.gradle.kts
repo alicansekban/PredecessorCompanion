@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    alias(libs.plugins.kotlin.serialization)
 
 }
 
@@ -88,7 +89,7 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
-
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.lifecycle.runtime.compose)
 
@@ -113,4 +114,10 @@ dependencies {
     // Coil ImageLoader
     implementation(libs.coil.compose)
     implementation(libs.accompanist.systemuicontroller)
+
+    implementation(libs.kotlinx.collections.immutable)
+
+    //paging
+    implementation("androidx.paging:paging-runtime:3.3.0")
+    implementation("androidx.paging:paging-compose:3.3.0")
 }

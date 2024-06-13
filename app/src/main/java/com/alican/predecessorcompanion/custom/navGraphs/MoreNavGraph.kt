@@ -1,19 +1,21 @@
 package com.alican.predecessorcompanion.custom.navGraphs
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.EaseIn
-import androidx.compose.animation.core.tween
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.toRoute
+import com.alican.predecessorcompanion.ui.more.MoreScreen
+import com.alican.predecessorcompanion.ui.more.item_detail.ItemDetailScreen
+import com.alican.predecessorcompanion.ui.more.item_detail.ItemDetailViewModel
+import com.alican.predecessorcompanion.ui.more.items.ItemsScreen
+import com.alican.predecessorcompanion.utils.ItemDetail
 import com.alican.predecessorcompanion.utils.ScreenRoutes
 
 
 fun NavGraphBuilder.moreNavGraph(
     navController: NavController,
-    isDarkMode: Boolean,
-    shouldBottomBarVisible: (Boolean) -> Unit
 ) {
     val navigation: (route: String) -> Unit = { route ->
         if (route == ScreenRoutes.BACK_PRESSED) {
@@ -30,8 +32,26 @@ fun NavGraphBuilder.moreNavGraph(
         composable(
             route = ScreenRoutes.MORE_ROUTE
         ) {
-
+            MoreScreen(navigate = navigation)
         }
-
+        composable(
+            route = ScreenRoutes.MORE_ITEMS_ROUTE
+        ) {
+            ItemsScreen(
+                //örnek navigasyon kodu.
+                goToDetail = {
+                    navController.navigate(it)
+                }
+            )
+        }
+        composable<ItemDetail> {
+            val args = it.toRoute<ItemDetail>()
+            val viewmodel = hiltViewModel<ItemDetailViewModel>()
+            viewmodel.args = args
+            ItemDetailScreen(
+                viewModel = viewmodel,
+                itemDetail = args,
+                onBackClick = { navController.popBackStack() })
+        }
     }
 }

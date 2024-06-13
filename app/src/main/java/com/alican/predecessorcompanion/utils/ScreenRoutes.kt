@@ -1,5 +1,7 @@
 package com.alican.predecessorcompanion.utils
 
+import kotlinx.serialization.Serializable
+
 object ScreenRoutes {
 
     const val BACK_PRESSED = "back_pressed"
@@ -12,6 +14,7 @@ object ScreenRoutes {
 
     const val LEADER_BOARD_HOST_ROUTE = "leader_board_host"
     const val LEADER_BOARD_ROUTE = "leader_board"
+    const val PLAYER_DETAIL_ROUTE = "player_detail_route/{player_id}"
 
     // Saved Graph
 
@@ -27,4 +30,14 @@ object ScreenRoutes {
 
     const val MORE_HOST_ROUTE = "more_host"
     const val MORE_ROUTE = "more"
+    const val MORE_ITEMS_ROUTE = "more_items"
+
 }
+
+@Serializable
+data class ItemDetail(
+    val name: String
+)
+
+@Serializable
+object ItemsList

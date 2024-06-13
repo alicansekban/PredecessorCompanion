@@ -65,8 +65,6 @@ fun MainNavigation(
         )
         moreNavGraph(
             navController = navController,
-            isDarkMode = isDarkMode,
-            shouldBottomBarVisible = shouldBottomBarVisible
         )
 
     }
