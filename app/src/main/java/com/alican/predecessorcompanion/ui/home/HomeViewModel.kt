@@ -31,7 +31,7 @@ class HomeViewModel @Inject constructor(
             }
 
             HomeUIStateEvents.onContinue -> {
-
+                searchPlayer()
             }
         }
     }
@@ -45,6 +45,7 @@ class HomeViewModel @Inject constructor(
                     is UIState.Loading -> {}
                     is UIState.Success -> {
                         val result = state.response
+                        _uiState.value = _uiState.value.copy(players = result)
 
                     }
                 }
