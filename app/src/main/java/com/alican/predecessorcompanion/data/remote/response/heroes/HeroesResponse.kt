@@ -17,7 +17,7 @@ data class HeroesResponse(
 	val classes: List<String?>? = null,
 
 	@Json(name="roles")
-	val roles: List<String?>? = null,
+	val roles: List<String>? = null,
 
 	@Json(name="name")
 	val name: String? = null,
