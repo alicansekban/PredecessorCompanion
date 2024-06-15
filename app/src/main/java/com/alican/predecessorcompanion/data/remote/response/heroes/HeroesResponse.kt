@@ -26,13 +26,13 @@ data class HeroesResponse(
 	val id: Int? = null,
 
 	@Json(name="display_name")
-	val displayName: String? = null,
+	val display_name: String? = null,
 
 	@Json(name="base_stats")
-	val baseStats: BaseStats? = null,
+	val base_stats: BaseStats? = null,
 
 	@Json(name="game_id")
-	val gameId: Int? = null
+	val game_id: Int? = null
 )
 
 data class BaseStats(
