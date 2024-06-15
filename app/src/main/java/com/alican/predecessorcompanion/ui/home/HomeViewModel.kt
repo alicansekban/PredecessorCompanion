@@ -30,8 +30,12 @@ class HomeViewModel @Inject constructor(
                 _uiState.value = _uiState.value.copy(searchQuery = event.searchQuery)
             }
 
-            HomeUIStateEvents.onContinue -> {
+            HomeUIStateEvents.OnContinue -> {
                 searchPlayer()
+            }
+
+            is HomeUIStateEvents.ChangeScreenType -> {
+                _uiState.value = _uiState.value.copy(screenType = event.screenType)
             }
         }
     }
