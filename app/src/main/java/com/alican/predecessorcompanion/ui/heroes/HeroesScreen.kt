@@ -1,37 +1,53 @@
 package com.alican.predecessorcompanion.ui.heroes
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
+import com.alican.predecessorcompanion.custom.image.ImageView
+import com.alican.predecessorcompanion.domain.ui_model.heroes.HeroesUIModel
 
 @Composable
-fun HeroesScreen(
-    viewModel: HeroesViewModel = hiltViewModel()
-) {
+fun HeroesScreen(hero: HeroesUIModel) {
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    if (uiState.isLoading) {
-
-    }
-    AnimatedVisibility(visible = uiState.isSuccess) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .width(100.dp)
+            .height(130.dp),
+        elevation = CardDefaults.cardElevation(5.dp),
+        shape = RoundedCornerShape(15.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
         Column(
-            Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())) {
-
-            uiState.heroes.forEach {
-                Text(text = it.heroName)
-            }
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            ImageView(
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(100.dp),
+                imageUrl = hero.image,
+                contentScale = ContentScale.Crop,
+            )
+            Text(
+                modifier = Modifier.padding(top = 4.dp),
+                text = hero.heroName,
+                maxLines = 1,
+            )
         }
     }
-
 }
+
+
