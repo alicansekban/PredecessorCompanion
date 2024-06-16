@@ -53,13 +53,24 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             searchPlayersUseCase.invoke(_uiState.value.searchQuery).collect { state ->
                 when (state) {
-                    is UIState.Empty -> {}
-                    is UIState.Error -> {}
-                    is UIState.Loading -> {}
+                    is UIState.Empty -> {
+                        _uiState.value = _uiState.value.copy(isLoading = false)
+                    }
+
+                    is UIState.Error -> {
+                        _uiState.value = _uiState.value.copy(isLoading = false)
+                    }
+
+                    is UIState.Loading -> {
+                        _uiState.value = _uiState.value.copy(isLoading = true)
+                    }
                     is UIState.Success -> {
                         val result = state.response
-                        _uiState.value = _uiState.value.copy(players = result)
-
+                        _uiState.value = _uiState.value.copy(
+                            players = result,
+                            isSearchResultEmpty = result.isEmpty(),
+                            isLoading = false
+                        )
                     }
                 }
             }
@@ -79,6 +90,7 @@ class HomeViewModel @Inject constructor(
                     is UIState.Success -> {
                         _uiState.value = _uiState.value.copy(
                             heroes = uiState.response,
+                            isLoading = false
                         )
                     }
                 }
