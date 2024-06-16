@@ -17,7 +17,8 @@ data class HomeUIStateModel(
     val searchQuery: String = "",
     val players: List<PlayersUIModel> = emptyList(),
     val heroes: List<HeroesUIModel> = emptyList(),
-    val screenType: ScreenType = ScreenType.HEROES
+    val screenType: ScreenType = ScreenType.HEROES,
+    val isSearchResultEmpty: Boolean = false
 )
 
 enum class ScreenType {
