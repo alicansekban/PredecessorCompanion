@@ -1,10 +1,10 @@
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -39,7 +39,6 @@ fun PlayerSearchItem(player: PlayersUIModel, openPlayerDetail: (String) -> Unit)
     ) {
         Column(
             modifier = Modifier
-                .wrapContentHeight()
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
