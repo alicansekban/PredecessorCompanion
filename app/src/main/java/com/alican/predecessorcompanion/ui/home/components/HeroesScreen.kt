@@ -1,4 +1,4 @@
-package com.alican.predecessorcompanion.ui.heroes
+package com.alican.predecessorcompanion.ui.home.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +20,6 @@ import com.alican.predecessorcompanion.domain.ui_model.heroes.HeroesUIModel
 
 @Composable
 fun HeroesScreen(hero: HeroesUIModel) {
-
     Card(
         modifier = Modifier
             .padding(8.dp)

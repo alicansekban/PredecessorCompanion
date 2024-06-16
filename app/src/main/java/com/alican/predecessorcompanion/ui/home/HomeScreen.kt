@@ -1,5 +1,6 @@
 package com.alican.predecessorcompanion.ui.home
 
+import PlayerSearchItem
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -33,7 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.alican.predecessorcompanion.ui.heroes.HeroesScreen
+import com.alican.predecessorcompanion.ui.home.components.HeroesScreen
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -94,7 +95,11 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
         }
 
         AnimatedVisibility(visible = uiState.screenType == ScreenType.SEARCH) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
                 OutlinedTextField(
                     value = uiState.searchQuery,
                     onValueChange = {
@@ -126,8 +131,14 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     label = { Text(text = "Search") }
                 )
 
-                uiState.players.forEach {
-                    Text(text = it.name)
+                FlowRow(
+                    modifier = Modifier.wrapContentSize(),
+
+                    ) {
+                    uiState.players.forEach {
+                        PlayerSearchItem(player = it) {
+                        }
+                    }
                 }
             }
         }
