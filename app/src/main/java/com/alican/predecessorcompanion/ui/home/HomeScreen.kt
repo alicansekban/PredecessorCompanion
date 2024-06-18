@@ -35,12 +35,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.alican.predecessorcompanion.domain.mapper.heroes.toDetailModel
 import com.alican.predecessorcompanion.ui.home.components.HeroesScreen
+import com.alican.predecessorcompanion.utils.HeroDetail
 import com.alican.predecessorcompanion.utils.noRippleClick
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    onHeroClick: (HeroDetail) -> Unit
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val focusRequester = FocusRequester()
     val focusManager = LocalFocusManager.current
@@ -85,7 +90,10 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         ) {
                         heroes.forEach {
                             HeroesScreen(
-                                hero = it
+                                hero = it,
+                                onClick = {
+                                    onHeroClick(it.toDetailModel())
+                                }
                             )
                         }
                     }
