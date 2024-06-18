@@ -45,7 +45,7 @@ fun NavGraphBuilder.leaderBoardNavGraph(
                 type = NavType.StringType
             })
         ) {
-            PlayerDetailScreen(onBackClick = { navController.popBackStack() })
+            PlayerDetailScreen(onBackClick = { navController.navigateUp() })
         }
     }
 }

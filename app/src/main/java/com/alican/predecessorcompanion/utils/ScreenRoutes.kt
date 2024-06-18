@@ -41,3 +41,11 @@ data class ItemDetail(
 
 @Serializable
 object ItemsList
+
+@Serializable
+data class HeroDetail(
+    val heroName: String = "",
+    val heroId: String = "",
+    val image: String = "",
+    val role: String = ""
+)

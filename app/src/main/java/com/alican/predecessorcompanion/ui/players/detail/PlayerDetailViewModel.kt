@@ -24,12 +24,6 @@ class PlayerDetailViewModel @Inject constructor(
 
     private val _detailState = MutableStateFlow<UIState<PlayersUIModel>>(UIState.Empty())
 
-    private val _uiState = MutableStateFlow(PlayerDetailUIState())
-    val uiState = _uiState.stateIn(
-        viewModelScope, SharingStarted.WhileSubscribed(),
-        PlayerDetailUIState()
-    )
-
     val detailState: StateFlow<UIState<PlayersUIModel>>
         get() = _detailState.stateIn(
             viewModelScope,
