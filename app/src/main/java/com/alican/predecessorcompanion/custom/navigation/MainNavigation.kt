@@ -45,8 +45,6 @@ fun MainNavigation(
     ) {
         homeNavGraph(
             navController = navController,
-            isDarkMode = isDarkMode,
-            shouldBottomBarVisible = shouldBottomBarVisible
         )
         leaderBoardNavGraph(
             navController = navController,
