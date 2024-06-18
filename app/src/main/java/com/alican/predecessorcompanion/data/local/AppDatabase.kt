@@ -11,5 +11,5 @@ import com.alican.predecessorcompanion.data.local.entity.HeroesEntity
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun exampleDao(): HeroesDao
+    abstract fun heroesDao(): HeroesDao
 }
