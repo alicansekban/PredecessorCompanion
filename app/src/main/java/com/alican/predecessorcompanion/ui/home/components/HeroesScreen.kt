@@ -15,13 +15,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.alican.museums.utils.noRippleClick
 import com.alican.predecessorcompanion.custom.image.ImageView
 import com.alican.predecessorcompanion.domain.ui_model.heroes.HeroesUIModel
 
 @Composable
-fun HeroesScreen(hero: HeroesUIModel) {
+fun HeroesScreen(
+    hero: HeroesUIModel,
+    onClick: () -> Unit
+) {
     Card(
         modifier = Modifier
+            .noRippleClick {
+                onClick.invoke()
+            }
             .padding(8.dp)
             .width(100.dp)
             .height(130.dp),

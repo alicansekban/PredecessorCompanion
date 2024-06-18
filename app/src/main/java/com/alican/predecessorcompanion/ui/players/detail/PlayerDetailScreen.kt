@@ -41,7 +41,6 @@ fun PlayerDetailScreen(
     viewModel: PlayerDetailViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val detailState by viewModel.detailState.collectAsStateWithLifecycle()
 
     Box(modifier = Modifier.fillMaxSize()) {
