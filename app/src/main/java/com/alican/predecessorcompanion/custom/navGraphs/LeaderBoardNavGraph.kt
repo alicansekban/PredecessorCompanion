@@ -2,10 +2,10 @@ package com.alican.predecessorcompanion.custom.navGraphs
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
+import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.ui.players.PlayersScreen
 import com.alican.predecessorcompanion.ui.players.detail.PlayerDetailScreen
 import com.alican.predecessorcompanion.utils.ScreenRoutes
@@ -31,21 +31,17 @@ fun NavGraphBuilder.leaderBoardNavGraph(
         composable(
             route = ScreenRoutes.LEADER_BOARD_ROUTE
         ) {
-            PlayersScreen(openPlayerDetail = { playerId ->
-                val route = ScreenRoutes.PLAYER_DETAIL_ROUTE.replace(
-                    oldValue = "{player_id}",
-                    newValue = playerId
-                )
-                navController.navigate(route)
+            PlayersScreen(openPlayerDetail = { player ->
+
+                navController.navigate(player)
             })
         }
-        composable(
-            route = ScreenRoutes.PLAYER_DETAIL_ROUTE,
-            arguments = listOf(navArgument("player_id") {
-                type = NavType.StringType
-            })
-        ) {
-            PlayerDetailScreen(onBackClick = { navController.navigateUp() })
+        composable<PlayersUIModel> {
+            val player = it.toRoute<PlayersUIModel>()
+            PlayerDetailScreen(
+                onBackClick = { navController.navigateUp() },
+                player = player
+            )
         }
     }
 }

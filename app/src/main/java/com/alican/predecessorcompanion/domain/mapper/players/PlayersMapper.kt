@@ -12,6 +12,7 @@ import com.alican.predecessorcompanion.domain.ui_model.players.PlayerStatisticsU
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayerTeammateUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.utils.Constant
+import java.util.Locale
 
 fun LeaderBoardResponse.toUIModel(): PlayersUIModel {
     return PlayersUIModel(
@@ -20,7 +21,7 @@ fun LeaderBoardResponse.toUIModel(): PlayersUIModel {
         rankIcon = (Constant.BASE_URL + this.rank_image),
         rankActive = this.rank_active ?: "",
         rankTitle = rank_title ?: "",
-        mmr = mmr ?: 0.0
+        mmr = String.format(Locale.ROOT, "%.4f", mmr).take(4)
     )
 }
 
