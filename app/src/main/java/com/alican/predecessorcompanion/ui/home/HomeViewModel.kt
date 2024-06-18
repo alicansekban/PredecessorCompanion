@@ -6,6 +6,7 @@ import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.use_case.heroes.GetHeroesUseCase
 import com.alican.predecessorcompanion.domain.use_case.players.SearchPlayersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -78,7 +79,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getHeroes() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getHeroesUseCase.invoke().collect { uiState ->
                 when (uiState) {
                     is UIState.Empty -> {}
