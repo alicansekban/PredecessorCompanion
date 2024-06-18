@@ -13,20 +13,17 @@ class GetHeroesUseCase @Inject constructor(
     private val heroesRepository: HeroesRepository
 ) {
 
-    operator fun invoke() : Flow<UIState<List<HeroesUIModel>>> {
+    operator fun invoke(): Flow<UIState<List<HeroesUIModel>>> {
         return flow {
             emit(UIState.Loading())
-            emit(
-               when( val result = heroesRepository.getHeroes()) {
-                   is ResultWrapper.GenericError -> UIState.Error(errorMessage = result.error ?: "Error")
-                   ResultWrapper.Loading -> UIState.Loading()
-                   ResultWrapper.NetworkError -> UIState.Error(errorMessage = "Network Error")
-                   is ResultWrapper.Success -> {
-                       val heroes = result.value.map { it.toUIModel() }
-                       UIState.Success(heroes)
-                   }
-               }
-            )
+            heroesRepository.getHeroes().collect { data ->
+                when (data) {
+                    is ResultWrapper.GenericError -> emit(UIState.Error(data.error ?: ""))
+                    ResultWrapper.Loading -> emit(UIState.Loading())
+                    ResultWrapper.NetworkError -> emit(UIState.Error(""))
+                    is ResultWrapper.Success -> emit(UIState.Success(data.value.map { it.toUIModel() }))
+                }
+            }
         }
     }
 }
