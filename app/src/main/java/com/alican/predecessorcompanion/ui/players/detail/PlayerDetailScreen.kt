@@ -11,12 +11,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.NavigateBefore
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,62 +22,23 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alican.predecessorcompanion.custom.image.ImageView
-import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.ui.players.statistics.PlayerStatisticsScreen
-import java.util.Locale
 
 @Composable
 fun PlayerDetailScreen(
-    viewModel: PlayerDetailViewModel = hiltViewModel(),
+    player: PlayersUIModel,
     onBackClick: () -> Unit
 ) {
-    val detailState by viewModel.detailState.collectAsStateWithLifecycle()
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        when (detailState) {
-            is UIState.Empty -> {
-                Text(
-                    text = "No player data available.",
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.Gray,
-                    fontSize = 20.sp,
-                    textAlign = TextAlign.Center
-                )
-            }
-
-            is UIState.Error -> {
-                val errorMessage = (detailState as UIState.Error).errorMessage
-                Text(
-                    text = "Error: $errorMessage",
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.Red,
-                    fontSize = 20.sp,
-                    textAlign = TextAlign.Center
-                )
-            }
-
-            is UIState.Loading -> {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
-
-            is UIState.Success -> {
-                val response = (detailState as UIState.Success<PlayersUIModel>).response
-                StatelessDetailScreen(
-                    response,
-                    onBackClick = onBackClick,
-                    playerId = viewModel.playerId
-                )
-            }
-        }
-    }
+    StatelessDetailScreen(
+        model = player,
+        onBackClick = onBackClick,
+        playerId = player.id
+    )
 }
 
 @Composable
@@ -132,10 +91,9 @@ fun StatelessDetailScreen(
                     playerId = playerId
                 )
 
-                val formattedMmr = String.format(Locale.ROOT, "%.4f", model.mmr).take(4)
                 Text(
                     modifier = Modifier.padding(vertical = 4.dp),
-                    text = formattedMmr,
+                    text = model.mmr,
                     fontSize = 18.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis

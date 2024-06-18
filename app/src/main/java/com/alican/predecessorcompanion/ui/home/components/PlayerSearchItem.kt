@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import com.alican.museums.utils.widthPercent
 import com.alican.predecessorcompanion.custom.image.ImageView
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
-import java.util.Locale
 
 @Composable
 fun PlayerSearchItem(player: PlayersUIModel, openPlayerDetail: (String) -> Unit) {
@@ -55,9 +54,8 @@ fun PlayerSearchItem(player: PlayersUIModel, openPlayerDetail: (String) -> Unit)
                 text = "Global Ranking: ${player.rankActive}",
                 fontSize = 10.sp,
             )
-            val formattedMmr = String.format(Locale.ROOT, "%.4f", player.mmr).take(4)
             Text(
-                text = "MMR: $formattedMmr",
+                text = "MMR: ${player.mmr}",
                 fontSize = 10.sp,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
