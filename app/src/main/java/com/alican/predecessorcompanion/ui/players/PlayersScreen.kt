@@ -30,11 +30,10 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.alican.predecessorcompanion.custom.image.ImageView
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
-import java.util.Locale
 
 @Composable
 fun PlayersScreen(
-    viewModel: PlayersViewModel = hiltViewModel(), openPlayerDetail: (String) -> Unit
+    viewModel: PlayersViewModel = hiltViewModel(), openPlayerDetail: (PlayersUIModel) -> Unit
 ) {
 
     val players: LazyPagingItems<PlayersUIModel> = viewModel.players.collectAsLazyPagingItems()
@@ -67,13 +66,13 @@ fun PlayersScreen(
 }
 
 @Composable
-fun PlayerItem(player: PlayersUIModel, openPlayerDetail: (String) -> Unit) {
+fun PlayerItem(player: PlayersUIModel, openPlayerDetail: (PlayersUIModel) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp)
             .clickable {
-                openPlayerDetail(player.id)
+                openPlayerDetail(player)
             },
         elevation = CardDefaults.cardElevation(6.dp),
         shape = RoundedCornerShape(10.dp),
@@ -93,8 +92,7 @@ fun PlayerItem(player: PlayersUIModel, openPlayerDetail: (String) -> Unit) {
             )
             Spacer(modifier = Modifier.weight(1f))
             ImageView(imageUrl = player.rankIcon, modifier = Modifier.size(30.dp))
-            val formattedMmr = String.format(Locale.ROOT,"%.4f", player.mmr).take(4)
-            Text(text = formattedMmr)
+            Text(text = player.mmr)
         }
     }
 }
