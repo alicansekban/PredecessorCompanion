@@ -3,7 +3,7 @@ package com.alican.predecessorcompanion.ui.more.item_detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alican.predecessorcompanion.data.remote.repository.items.ItemsRepository
-import com.alican.predecessorcompanion.utils.ItemDetail
+import com.alican.predecessorcompanion.domain.ui_model.items.ItemUIModel
 import com.alican.predecessorcompanion.utils.ResultWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class ItemDetailViewModel @Inject constructor(
     private val repository: ItemsRepository
 ) : ViewModel() {
-    var args: ItemDetail? = null
+    var args: ItemUIModel? = null
 
     private val _uiState = MutableStateFlow(ItemDetailUIState())
     val uiState = _uiState.stateIn(
@@ -28,7 +28,7 @@ class ItemDetailViewModel @Inject constructor(
     fun getDetail() {
         viewModelScope.launch {
             args?.let { it ->
-                when (val response = repository.getItemDetails(it.name)) {
+                when (val response = repository.getItemDetails(it.itemName)) {
                     is ResultWrapper.GenericError -> {
                         _uiState.update {
                             it.copy(errorMessage = response.error.toString(), isLoading = false)

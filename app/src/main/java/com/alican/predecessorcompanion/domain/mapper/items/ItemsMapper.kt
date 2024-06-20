@@ -10,7 +10,7 @@ fun ItemsResponseItem.toUIModel(): ItemUIModel {
         displayName = this.display_name ?: "",
         itemImage = Constant.BASE_URL + this.image,
         itemType = this.rarity ?: "Default",
-        itemPrice = this.price,
+        itemPrice = this.price.toString(),
         slotType = this.slot_type,
         aggressionType = this.aggression_type
     )
