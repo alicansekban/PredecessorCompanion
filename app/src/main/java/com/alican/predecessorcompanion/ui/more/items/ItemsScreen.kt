@@ -26,14 +26,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alican.predecessorcompanion.custom.image.ImageView
 import com.alican.predecessorcompanion.domain.ui_model.items.ItemUIModel
-import com.alican.predecessorcompanion.utils.ItemDetail
 
 @Composable
 fun ItemsScreen(
-    modifier: Modifier = Modifier,
     viewModel: ItemsViewModel = hiltViewModel(),
-    goToDetail: (ItemDetail) -> Unit
-    ) {
+    goToDetail: (ItemUIModel) -> Unit
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
 
@@ -56,15 +54,14 @@ fun ItemsScreen(
 }
 
 @Composable
-fun ItemsListItem(item: ItemUIModel, goToDetail: (ItemDetail) -> Unit) {
+fun ItemsListItem(item: ItemUIModel, goToDetail: (ItemUIModel) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
             .padding(8.dp)
             .clickable {
-                val detailModel = ItemDetail(name = item.itemName)
-                goToDetail(detailModel)
+                goToDetail(item)
             },
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(10.dp)

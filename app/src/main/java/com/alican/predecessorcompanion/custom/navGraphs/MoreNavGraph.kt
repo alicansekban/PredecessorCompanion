@@ -6,11 +6,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
+import com.alican.predecessorcompanion.domain.ui_model.items.ItemUIModel
 import com.alican.predecessorcompanion.ui.more.MoreScreen
 import com.alican.predecessorcompanion.ui.more.item_detail.ItemDetailScreen
 import com.alican.predecessorcompanion.ui.more.item_detail.ItemDetailViewModel
 import com.alican.predecessorcompanion.ui.more.items.ItemsScreen
-import com.alican.predecessorcompanion.utils.ItemDetail
 import com.alican.predecessorcompanion.utils.ScreenRoutes
 
 
@@ -38,20 +38,18 @@ fun NavGraphBuilder.moreNavGraph(
             route = ScreenRoutes.MORE_ITEMS_ROUTE
         ) {
             ItemsScreen(
-                //örnek navigasyon kodu.
                 goToDetail = {
                     navController.navigate(it)
                 }
             )
         }
-        composable<ItemDetail> {
-            val args = it.toRoute<ItemDetail>()
+        composable<ItemUIModel> {
+            val args = it.toRoute<ItemUIModel>()
             val viewmodel = hiltViewModel<ItemDetailViewModel>()
-            viewmodel.args = args
             ItemDetailScreen(
                 viewModel = viewmodel,
-                itemDetail = args,
-                onBackClick = { navController.popBackStack() })
+                model = args,
+                onBackClick = { navController.navigateUp() })
         }
     }
 }
