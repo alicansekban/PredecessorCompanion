@@ -9,5 +9,6 @@ data class PlayersUIModel(
     val rankIcon: String = "",
     val rankActive: String = "",
     val rankTitle: String = "",
-    val mmr: String = ""
+    val mmr: String = "",
+    val isFavorite: Boolean = false
 )

@@ -5,27 +5,81 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.alican.predecessorcompanion.custom.paging.PlayerPagingSource
+import com.alican.predecessorcompanion.data.local.entity.PlayersEntity
 import com.alican.predecessorcompanion.data.remote.api.WebService
+import com.alican.predecessorcompanion.data.remote.dataSource.players.PlayersLocalDataSource
 import com.alican.predecessorcompanion.data.remote.dataSource.players.PlayersRemoteDataSource
 import com.alican.predecessorcompanion.data.remote.response.leaderBoard.LeaderBoardResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerCommonTeammatesResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerHeroStatisticsResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerMatchesResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerStatisticsResponse
+import com.alican.predecessorcompanion.domain.mapper.players.toEntity
 import com.alican.predecessorcompanion.domain.mapper.players.toUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.utils.ResultWrapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PlayersRepository @Inject constructor(
     private val remoteDataSource: PlayersRemoteDataSource,
+    private val localDataSource: PlayersLocalDataSource,
     private val webService: WebService
 ) {
     suspend fun searchPlayers(searchQuery: String): ResultWrapper<List<LeaderBoardResponse>> {
         return remoteDataSource.searchPlayers(searchQuery = searchQuery)
     }
+
+    suspend fun getPlayers(): Flow<ResultWrapper<List<PlayersEntity>>> {
+        return flow {
+            val localPlayers = localDataSource.getPlayers()
+            if (localPlayers.isNotEmpty()) {
+                emit(ResultWrapper.Success(localPlayers))
+            } else {
+                when (val apiData =
+                    remoteDataSource.searchPlayers("")) {
+                    is ResultWrapper.GenericError -> {
+                        emit(ResultWrapper.GenericError())
+                    }
+
+                    ResultWrapper.Loading -> {
+                        emit(ResultWrapper.Loading)
+                    }
+
+                    ResultWrapper.NetworkError -> {
+                        emit(ResultWrapper.NetworkError)
+                    }
+
+                    is ResultWrapper.Success -> {
+                        val response = apiData.value
+                        localDataSource.insertPLayer(response.map { it.toEntity() })
+                        emit(ResultWrapper.Success(localDataSource.getPlayers()))
+                    }
+                }
+            }
+        }
+    }
+
+    suspend fun addPlayerToFavorite(player: PlayersUIModel): PlayersUIModel {
+        return try {
+            localDataSource.insertPLayer(listOf(player.toEntity()))
+            player.copy(isFavorite = true)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    suspend fun removePlayerFromFavorite(player: PlayersUIModel): PlayersUIModel {
+        return try {
+            localDataSource.removePlayer(player.id)
+            player.copy(isFavorite = false)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
 
     fun playersPaging(searchQuery: String): Flow<PagingData<PlayersUIModel>> {
         return Pager(PagingConfig(pageSize = 20)) {
@@ -45,15 +99,15 @@ class PlayersRepository @Inject constructor(
         return remoteDataSource.getPlayerStatistics(playerId)
     }
 
-    suspend fun getPlayerHeroStatistics(playerId: String): ResultWrapper<PlayerHeroStatisticsResponse>{
+    suspend fun getPlayerHeroStatistics(playerId: String): ResultWrapper<PlayerHeroStatisticsResponse> {
         return remoteDataSource.getPlayerHeroStatistics(playerId)
     }
 
-    suspend fun getPlayerMatches(playerId: String): ResultWrapper<PlayerMatchesResponse>{
+    suspend fun getPlayerMatches(playerId: String): ResultWrapper<PlayerMatchesResponse> {
         return remoteDataSource.getPlayerMatches(playerId)
     }
 
-    suspend fun getPlayerTeammates(playerId: String): ResultWrapper<PlayerCommonTeammatesResponse>{
+    suspend fun getPlayerTeammates(playerId: String): ResultWrapper<PlayerCommonTeammatesResponse> {
         return remoteDataSource.getPlayerTeammates(playerId)
     }
 }
