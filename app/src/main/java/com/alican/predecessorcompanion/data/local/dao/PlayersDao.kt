@@ -5,17 +5,18 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.alican.predecessorcompanion.data.local.entity.PlayersEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PlayersDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPlayers(players: List<PlayersEntity>)
+    suspend fun insertPlayer(player: PlayersEntity)
 
     @Query("SELECT * FROM players WHERE playerId = :playerId")
-    fun getPlayerDetails(playerId: String): PlayersEntity
+    fun isPlayerFavorite(playerId: String): PlayersEntity?
 
     @Query("SELECT * FROM players")
-    fun getPlayers(): List<PlayersEntity>
+    fun getPlayers(): Flow<List<PlayersEntity>>
 
     @Query("DELETE FROM players Where playerId = :playerId")
     fun removePlayer(playerId: String)

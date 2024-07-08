@@ -93,3 +93,14 @@ fun PlayersUIModel.toEntity(): PlayersEntity {
         mmr = mmr
     )
 }
+
+fun PlayersEntity.toUIModel(): PlayersUIModel {
+    return PlayersUIModel(
+        name = name,
+        id = playerId,
+        rankIcon = rankIcon,
+        rankActive = rankActive,
+        rankTitle = rankTitle,
+        mmr = mmr
+    )
+}
