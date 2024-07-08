@@ -41,5 +41,4 @@ class HeroesRepository @Inject constructor(
             }
         }
     }
-
 }

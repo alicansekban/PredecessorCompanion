@@ -1,5 +1,6 @@
 package com.alican.predecessorcompanion.domain.mapper.players
 
+import com.alican.predecessorcompanion.data.local.entity.PlayersEntity
 import com.alican.predecessorcompanion.data.remote.response.leaderBoard.LeaderBoardResponse
 import com.alican.predecessorcompanion.data.remote.response.player.HeroStatisticsItem
 import com.alican.predecessorcompanion.data.remote.response.player.MatchesItem
@@ -68,5 +69,27 @@ fun TeammatesItem.toUIModel(): PlayerTeammateUIModel{
         matchesPlayed = matches_played.toString(),
         winRate = winrate.toString(),
         name = display_name ?: ""
+    )
+}
+
+fun LeaderBoardResponse.toEntity(): PlayersEntity {
+    return PlayersEntity(
+        name = display_name ?: "",
+        playerId = id ?: "",
+        rankIcon = (Constant.BASE_URL + this.rank_image),
+        rankActive = this.rank_active ?: "",
+        rankTitle = rank_title ?: "",
+        mmr = String.format(Locale.ROOT, "%.4f", mmr).take(4)
+    )
+}
+
+fun PlayersUIModel.toEntity(): PlayersEntity {
+    return PlayersEntity(
+        name = name,
+        playerId = id,
+        rankIcon = rankIcon,
+        rankActive = rankActive,
+        rankTitle = rankTitle,
+        mmr = mmr
     )
 }
