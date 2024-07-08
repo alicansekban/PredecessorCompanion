@@ -14,7 +14,6 @@ import com.alican.predecessorcompanion.data.remote.response.player.PlayerCommonT
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerHeroStatisticsResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerMatchesResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerStatisticsResponse
-import com.alican.predecessorcompanion.domain.mapper.players.toEntity
 import com.alican.predecessorcompanion.domain.mapper.players.toUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.utils.ResultWrapper
@@ -32,53 +31,30 @@ class PlayersRepository @Inject constructor(
         return remoteDataSource.searchPlayers(searchQuery = searchQuery)
     }
 
-    suspend fun getPlayers(): Flow<ResultWrapper<List<PlayersEntity>>> {
+    fun getPlayers(): Flow<List<PlayersEntity>> {
         return flow {
-            val localPlayers = localDataSource.getPlayers()
-            if (localPlayers.isNotEmpty()) {
-                emit(ResultWrapper.Success(localPlayers))
-            } else {
-                when (val apiData =
-                    remoteDataSource.searchPlayers("")) {
-                    is ResultWrapper.GenericError -> {
-                        emit(ResultWrapper.GenericError())
-                    }
-
-                    ResultWrapper.Loading -> {
-                        emit(ResultWrapper.Loading)
-                    }
-
-                    ResultWrapper.NetworkError -> {
-                        emit(ResultWrapper.NetworkError)
-                    }
-
-                    is ResultWrapper.Success -> {
-                        val response = apiData.value
-                        localDataSource.insertPLayer(response.map { it.toEntity() })
-                        emit(ResultWrapper.Success(localDataSource.getPlayers()))
-                    }
-                }
-            }
+            localDataSource.getPlayers()
         }
     }
 
-    suspend fun addPlayerToFavorite(player: PlayersUIModel): PlayersUIModel {
-        return try {
-            localDataSource.insertPLayer(listOf(player.toEntity()))
-            player.copy(isFavorite = true)
+    suspend fun addPlayerToFavorite(player: PlayersEntity) {
+        try {
+            localDataSource.insertPlayer(player)
         } catch (e: Exception) {
             throw e
         }
     }
 
-    suspend fun removePlayerFromFavorite(player: PlayersUIModel): PlayersUIModel {
-        return try {
+    fun removePlayerFromFavorite(player: PlayersUIModel) {
+        try {
             localDataSource.removePlayer(player.id)
-            player.copy(isFavorite = false)
         } catch (e: Exception) {
             throw e
         }
     }
+
+    fun isPlayerFavorite(playerId: String): PlayersEntity? =
+        localDataSource.isPlayerFavorite(playerId = playerId)
 
 
     fun playersPaging(searchQuery: String): Flow<PagingData<PlayersUIModel>> {
