@@ -1,5 +1,6 @@
 package com.alican.predecessorcompanion.ui.players
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,32 +13,38 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alican.predecessorcompanion.custom.image.ImageView
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun PlayersScreen(
     viewModel: PlayersViewModel = hiltViewModel(), openPlayerDetail: (PlayersUIModel) -> Unit
 ) {
 
-    val players: LazyPagingItems<PlayersUIModel> = viewModel.players.collectAsLazyPagingItems()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
+
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
@@ -47,26 +54,45 @@ fun PlayersScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             state = listState
         ) {
-            items(players.itemCount) {
-                PlayerItem(player = players[it]!!, openPlayerDetail = openPlayerDetail)
+            items(uiState.players) {
+                PlayerItem(
+                    player = it, openPlayerDetail = openPlayerDetail,
+                    onFavoriteClicked = { player ->
+                        viewModel.updateUIEvents(
+                            event = PlayersUIStateEvents.FavoriteButtonClicked(
+                                player = player
+                            )
+                        )
+                    }
+                )
             }
-            item {
-                if (players.loadState.append is LoadState.Error) {
-                    Text(text = "error")
-                }
-                if (players.loadState.append is LoadState.Loading) {
-                    CircularProgressIndicator()
-                }
+
+        }
+
+
+    }
+    LaunchedEffect(key1 = listState) {
+        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
+            .collectLatest { index ->
+                if (index != null && index >= uiState.players.size - 1)
+                    viewModel.updateUIEvents(
+                        PlayersUIStateEvents.GetNextPage(
+                            page = uiState.page.plus(
+                                1
+                            )
+                        )
+                    )
+
             }
-        }
-        if (players.loadState.refresh is LoadState.Loading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        }
     }
 }
 
 @Composable
-fun PlayerItem(player: PlayersUIModel, openPlayerDetail: (PlayersUIModel) -> Unit) {
+fun PlayerItem(
+    player: PlayersUIModel, openPlayerDetail: (PlayersUIModel) -> Unit,
+    onFavoriteClicked: (PlayersUIModel) -> Unit
+) {
+    val icon = if (player.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -91,6 +117,9 @@ fun PlayerItem(player: PlayersUIModel, openPlayerDetail: (PlayersUIModel) -> Uni
                 modifier = Modifier
             )
             Spacer(modifier = Modifier.weight(1f))
+            Image(imageVector = icon, contentDescription = "", modifier = Modifier.clickable {
+                onFavoriteClicked(player)
+            })
             ImageView(imageUrl = player.rankIcon, modifier = Modifier.size(30.dp))
             Text(text = player.mmr)
         }
