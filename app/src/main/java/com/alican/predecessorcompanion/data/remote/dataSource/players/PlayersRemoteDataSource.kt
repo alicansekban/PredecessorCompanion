@@ -17,6 +17,17 @@ class PlayersRemoteDataSource @Inject constructor(
     suspend fun searchPlayers(searchQuery : String) : ResultWrapper<List<LeaderBoardResponse>> {
         return safeApiCall(Dispatchers.IO) {webService.getLeaderBoard(page = 0, name =searchQuery )}
     }
+    suspend fun getPlayersPaging(
+        searchQuery: String,
+        page: Int
+    ): ResultWrapper<List<LeaderBoardResponse>> {
+        return safeApiCall(Dispatchers.IO) {
+            webService.getLeaderBoard(
+                page = page,
+                name = searchQuery
+            )
+        }
+    }
 
     suspend fun getPlayerDetail(playerId: String) : ResultWrapper<LeaderBoardResponse> {
         return safeApiCall(Dispatchers.IO) {webService.getPlayerDetail(playerId)}

@@ -22,7 +22,6 @@ class AddPlayerToFavoriteUseCase @Inject constructor(
                 } catch (e: Exception) {
                     UIState.Error("")
                 }
-
             )
         }
     }
