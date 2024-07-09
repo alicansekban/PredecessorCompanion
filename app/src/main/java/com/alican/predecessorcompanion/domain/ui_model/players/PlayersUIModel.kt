@@ -10,5 +10,5 @@ data class PlayersUIModel(
     val rankActive: String = "",
     val rankTitle: String = "",
     val mmr: String = "",
-    val isFavorite: Boolean = false
+    var isFavorite: Boolean = false
 )

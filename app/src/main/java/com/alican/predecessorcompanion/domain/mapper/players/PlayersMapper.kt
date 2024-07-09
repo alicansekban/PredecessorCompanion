@@ -15,14 +15,17 @@ import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.utils.Constant
 import java.util.Locale
 
-fun LeaderBoardResponse.toUIModel(): PlayersUIModel {
+fun LeaderBoardResponse.toUIModel(
+    isFavorite: Boolean = false
+): PlayersUIModel {
     return PlayersUIModel(
         name = display_name ?: "",
         id = id ?: "",
         rankIcon = (Constant.BASE_URL + this.rank_image),
         rankActive = this.rank_active ?: "",
         rankTitle = rank_title ?: "",
-        mmr = String.format(Locale.ROOT, "%.4f", mmr).take(4)
+        mmr = String.format(Locale.ROOT, "%.4f", mmr).take(4),
+        isFavorite = isFavorite
     )
 }
 
