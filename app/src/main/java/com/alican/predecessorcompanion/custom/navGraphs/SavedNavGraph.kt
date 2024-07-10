@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.alican.predecessorcompanion.ui.saved.SavedScreen
 import com.alican.predecessorcompanion.utils.ScreenRoutes
 
 
@@ -27,8 +28,7 @@ fun NavGraphBuilder.savedNavGraph(
         composable(
             route = ScreenRoutes.SAVED_ROUTE
         ) {
-
+            SavedScreen()
         }
-
     }
 }
