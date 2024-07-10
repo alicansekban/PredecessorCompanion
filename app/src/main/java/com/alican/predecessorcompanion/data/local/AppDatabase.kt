@@ -9,7 +9,7 @@ import com.alican.predecessorcompanion.data.local.entity.PlayersEntity
 
 @Database(
     entities = [HeroesEntity::class, PlayersEntity::class],
-    version = 2
+    version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
 
