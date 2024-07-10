@@ -8,7 +8,6 @@ import com.alican.predecessorcompanion.data.remote.response.player.PlayerCommonT
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerHeroStatisticsResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerMatchesResponse
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerStatisticsResponse
-import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.utils.ResultWrapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -43,9 +42,9 @@ class PlayersRepository @Inject constructor(
         }
     }
 
-    fun removePlayerFromFavorite(player: PlayersUIModel) {
+    fun removePlayerFromFavorite(playerId: String) {
         try {
-            localDataSource.removePlayer(player.id)
+            localDataSource.removePlayer(playerId)
         } catch (e: Exception) {
             throw e
         }
