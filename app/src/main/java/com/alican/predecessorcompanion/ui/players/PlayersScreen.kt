@@ -26,6 +26,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -92,7 +95,10 @@ fun PlayerItem(
     player: PlayersUIModel, openPlayerDetail: (PlayersUIModel) -> Unit,
     onFavoriteClicked: (PlayersUIModel) -> Unit
 ) {
-    val icon = if (player.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder
+    var isFavorite by remember {
+        mutableStateOf(player.isFavorite)
+    }
+    val icon = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -119,6 +125,7 @@ fun PlayerItem(
             Spacer(modifier = Modifier.weight(1f))
             Image(imageVector = icon, contentDescription = "", modifier = Modifier.clickable {
                 onFavoriteClicked(player)
+                isFavorite = isFavorite.not()
             })
             ImageView(imageUrl = player.rankIcon, modifier = Modifier.size(30.dp))
             Text(text = player.mmr)

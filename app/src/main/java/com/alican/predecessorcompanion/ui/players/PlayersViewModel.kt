@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.domain.use_case.players.AddPlayerToFavoriteUseCase
+import com.alican.predecessorcompanion.domain.use_case.players.RemovePlayerFromFavoriteUseCase
 import com.alican.predecessorcompanion.domain.use_case.players.SearchPlayersPagingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class PlayersViewModel @Inject constructor(
     private val playersPagingUseCase: SearchPlayersPagingUseCase,
-    private val addPlayerToFavoriteUseCase: AddPlayerToFavoriteUseCase
+    private val addPlayerToFavoriteUseCase: AddPlayerToFavoriteUseCase,
+    private val removePlayerFromFavoriteUseCase: RemovePlayerFromFavoriteUseCase
 ) :
     ViewModel() {
 
@@ -42,7 +44,7 @@ class PlayersViewModel @Inject constructor(
 
             is PlayersUIStateEvents.FavoriteButtonClicked -> {
                 if (event.player.isFavorite) {
-                    //remove favorite burada çalışacak
+                    removePlayerFromFavorite(player = event.player)
                 } else {
                     addToFavorite(player = event.player)
                 }
@@ -83,6 +85,21 @@ class PlayersViewModel @Inject constructor(
                     is UIState.Loading -> {}
                     is UIState.Success -> {
                         player.isFavorite = true
+                    }
+                }
+            }
+        }
+    }
+
+    private fun removePlayerFromFavorite(player: PlayersUIModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            removePlayerFromFavoriteUseCase.invoke(playerId = player.id).collect { state ->
+                when (state) {
+                    is UIState.Empty -> {}
+                    is UIState.Error -> {}
+                    is UIState.Loading -> {}
+                    is UIState.Success -> {
+                        player.isFavorite = false
                     }
                 }
             }
