@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class RemovePlayerFromFavoriteUseCase @Inject constructor(
+class RemovePlayerFromSavedUseCase @Inject constructor(
     private val repository: PlayersRepository
 ) {
     operator fun invoke(playerId: String): Flow<UIState<Boolean>> {
@@ -14,7 +14,7 @@ class RemovePlayerFromFavoriteUseCase @Inject constructor(
             emit(UIState.Loading())
             emit(
                 try {
-                    repository.removePlayerFromFavorite(playerId = playerId)
+                    repository.removePlayerFromSaved(playerId = playerId)
                     UIState.Success(true)
                 } catch (e: Exception) {
                     UIState.Error("")

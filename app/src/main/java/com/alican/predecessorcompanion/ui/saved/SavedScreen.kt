@@ -2,7 +2,7 @@ package com.alican.predecessorcompanion.ui.saved
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -16,13 +16,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.alican.predecessorcompanion.custom.tab.getTabList
 import com.alican.predecessorcompanion.ui.saved.builds.SavedBuilsScreen
 import com.alican.predecessorcompanion.ui.saved.players.SavedPlayersScreen
 
 @Composable
-fun SavedScreen(viewModel: SavedScreenViewModel = hiltViewModel()) {
+fun SavedScreen() {
     var tabIndex by remember {
         mutableStateOf(0)
     }
@@ -33,7 +32,7 @@ fun SavedScreen(viewModel: SavedScreenViewModel = hiltViewModel()) {
             containerColor = MaterialTheme.colorScheme.onPrimary,
             divider = {},
             indicator = {
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier
                         .tabIndicatorOffset(it[tabIndex])
                 )
