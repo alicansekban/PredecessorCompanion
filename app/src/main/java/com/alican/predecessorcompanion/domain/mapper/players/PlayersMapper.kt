@@ -104,6 +104,7 @@ fun PlayersEntity.toUIModel(): PlayersUIModel {
         rankIcon = rankIcon,
         rankActive = rankActive,
         rankTitle = rankTitle,
-        mmr = mmr
+        mmr = mmr,
+        isFavorite = true
     )
 }
