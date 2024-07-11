@@ -6,12 +6,14 @@ import androidx.paging.PagingData
 import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.domain.use_case.players.AddPlayerToFavoriteUseCase
+import com.alican.predecessorcompanion.domain.use_case.players.GetSavedPlayersUseCase
 import com.alican.predecessorcompanion.domain.use_case.players.RemovePlayerFromSavedUseCase
 import com.alican.predecessorcompanion.domain.use_case.players.SearchPlayersPagingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +21,8 @@ import javax.inject.Inject
 class PlayersViewModel @Inject constructor(
     private val playersPagingUseCase: SearchPlayersPagingUseCase,
     private val addPlayerToFavoriteUseCase: AddPlayerToFavoriteUseCase,
-    private val removePlayerFromSavedUseCase: RemovePlayerFromSavedUseCase
+    private val removePlayerFromSavedUseCase: RemovePlayerFromSavedUseCase,
+    private val getSavedPlayersUseCase: GetSavedPlayersUseCase
 ) :
     ViewModel() {
 
@@ -34,6 +37,7 @@ class PlayersViewModel @Inject constructor(
 
     init {
         getPlayersNextPage(1)
+        getSavedPlayers()
     }
 
     fun updateUIEvents(event: PlayersUIStateEvents) {
@@ -47,6 +51,33 @@ class PlayersViewModel @Inject constructor(
                     removePlayerFromFavorite(player = event.player)
                 } else {
                     addToFavorite(player = event.player)
+                }
+            }
+        }
+    }
+    private fun getSavedPlayers() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getSavedPlayersUseCase.invoke().collect { state ->
+                when (state) {
+                    is UIState.Empty -> {}
+                    is UIState.Error -> {}
+                    is UIState.Loading -> {}
+                    is UIState.Success -> {
+                        val localPlayers = state.response
+                        val remotePlayers = _uiState.value.players
+                        val updatedRemotePlayers = remotePlayers.map { remotePlayer ->
+                            if (localPlayers.any { localPlayer -> localPlayer.id == remotePlayer.id }) {
+                                remotePlayer.copy(isFavorite = true)
+                            } else {
+                                remotePlayer.copy(isFavorite = false)
+                            }
+                        }
+                        _uiState.update {
+                            it.copy(
+                                players = updatedRemotePlayers
+                            )
+                        }
+                    }
                 }
             }
         }
