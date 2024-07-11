@@ -5,7 +5,9 @@ import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.mapper.players.toUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 
@@ -13,18 +15,16 @@ class GetSavedPlayersUseCase @Inject constructor(private val repository: Players
 
     operator fun invoke(): Flow<UIState<List<PlayersUIModel>>> {
         return flow {
-            try {
-                repository.getPlayers()
-                    .collect { players ->
-                        if (players.isEmpty()) {
-                            emit(UIState.Empty())
-                        } else {
-                            emit(UIState.Success(players.map { it.toUIModel() }))
-                        }
-                    }
-            } catch (e: Exception) {
-                emit(UIState.Error("error"))
+            emit(UIState.Loading())
+            repository.getPlayers().map { list ->
+                list.map {
+                    it.toUIModel()
+                }
+            }.collect { players ->
+                emit(UIState.Success(players))
             }
+        }.catch { e ->
+            emit(UIState.Error(e.message ?: "Unknown error"))
         }
     }
 }
