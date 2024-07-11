@@ -25,6 +25,7 @@ fun SavedPlayersScreen(viewModel: SavedPlayersViewModel = hiltViewModel()) {
     ) {
         items(
             uiState.savedPlayers,
+            key = { it.id }
         ) {
                 PlayerItem(
                     player = it,
@@ -34,7 +35,5 @@ fun SavedPlayersScreen(viewModel: SavedPlayersViewModel = hiltViewModel()) {
                     }
                 )
             }
-
-
     }
 }
