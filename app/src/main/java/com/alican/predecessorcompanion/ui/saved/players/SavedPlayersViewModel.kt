@@ -46,8 +46,8 @@ class SavedPlayersViewModel @Inject constructor(
                         )
                     }
 
-                    is UIState.Error -> TODO()
-                    is UIState.Loading -> TODO()
+                    is UIState.Error -> {}
+                    is UIState.Loading -> {}
                 }
             }
         }
@@ -55,7 +55,11 @@ class SavedPlayersViewModel @Inject constructor(
 
     fun removeFromSavedPlayers(model: PlayersUIModel) {
         viewModelScope.launch(Dispatchers.IO) {
+            removeFromSavedPlayersUseCase.invoke(model.id).collect {
+                if (it is UIState.Success) {
 
+                }
+            }
         }
     }
 

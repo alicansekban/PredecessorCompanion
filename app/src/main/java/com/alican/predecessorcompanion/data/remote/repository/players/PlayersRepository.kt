@@ -10,7 +10,6 @@ import com.alican.predecessorcompanion.data.remote.response.player.PlayerMatches
 import com.alican.predecessorcompanion.data.remote.response.player.PlayerStatisticsResponse
 import com.alican.predecessorcompanion.utils.ResultWrapper
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PlayersRepository @Inject constructor(
@@ -29,9 +28,8 @@ class PlayersRepository @Inject constructor(
     }
 
     fun getPlayers(): Flow<List<PlayersEntity>> {
-        return flow {
-            localDataSource.getPlayers()
-        }
+        return localDataSource.getPlayers()
+
     }
 
     suspend fun addPlayerToFavorite(player: PlayersEntity) {
@@ -52,7 +50,6 @@ class PlayersRepository @Inject constructor(
 
     fun isPlayerFavorite(playerId: String): PlayersEntity? =
         localDataSource.isPlayerFavorite(playerId = playerId)
-
 
 
     suspend fun getPlayerDetails(playerId: String): ResultWrapper<LeaderBoardResponse> {
