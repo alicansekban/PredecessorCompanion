@@ -42,7 +42,7 @@ class PlayersRepository @Inject constructor(
         }
     }
 
-    fun removePlayerFromFavorite(playerId: String) {
+    fun removePlayerFromSaved(playerId: String) {
         try {
             localDataSource.removePlayer(playerId)
         } catch (e: Exception) {

@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
 import com.alican.predecessorcompanion.domain.use_case.players.AddPlayerToFavoriteUseCase
-import com.alican.predecessorcompanion.domain.use_case.players.RemovePlayerFromFavoriteUseCase
+import com.alican.predecessorcompanion.domain.use_case.players.RemovePlayerFromSavedUseCase
 import com.alican.predecessorcompanion.domain.use_case.players.SearchPlayersPagingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class PlayersViewModel @Inject constructor(
     private val playersPagingUseCase: SearchPlayersPagingUseCase,
     private val addPlayerToFavoriteUseCase: AddPlayerToFavoriteUseCase,
-    private val removePlayerFromFavoriteUseCase: RemovePlayerFromFavoriteUseCase
+    private val removePlayerFromSavedUseCase: RemovePlayerFromSavedUseCase
 ) :
     ViewModel() {
 
@@ -93,7 +93,7 @@ class PlayersViewModel @Inject constructor(
 
     private fun removePlayerFromFavorite(player: PlayersUIModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            removePlayerFromFavoriteUseCase.invoke(playerId = player.id).collect { state ->
+            removePlayerFromSavedUseCase.invoke(playerId = player.id).collect { state ->
                 when (state) {
                     is UIState.Empty -> {}
                     is UIState.Error -> {}
