@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.alican.predecessorcompanion.ui.builds.BuildsScreen
 import com.alican.predecessorcompanion.utils.ScreenRoutes
 
 
@@ -27,8 +28,7 @@ fun NavGraphBuilder.buildNavGraph(
         composable(
             route = ScreenRoutes.BUILD_ROUTE
         ) {
-
+            BuildsScreen()
         }
-
     }
 }
