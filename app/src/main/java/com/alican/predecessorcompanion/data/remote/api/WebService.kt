@@ -1,5 +1,6 @@
 package com.alican.predecessorcompanion.data.remote.api
 
+import com.alican.predecessorcompanion.data.remote.response.builds.BuildsResponseItem
 import com.alican.predecessorcompanion.data.remote.response.heroes.HeroesResponse
 import com.alican.predecessorcompanion.data.remote.response.heroes_statistics.HeroesStatisticsResponse
 import com.alican.predecessorcompanion.data.remote.response.items.ItemsResponseItem
@@ -61,4 +62,9 @@ interface WebService {
     suspend fun getItemDetails(
         @Path("item_name") name: String
     ): ItemsResponseItem
+
+    @GET("builds.json")
+    suspend fun getBuilds(
+        @Query("page") page: Int,
+    ): List<BuildsResponseItem>
 }
