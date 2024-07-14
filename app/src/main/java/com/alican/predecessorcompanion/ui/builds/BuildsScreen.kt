@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.alican.predecessorcompanion.ui.saved.builds.BuildItem
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -35,7 +35,9 @@ fun BuildsScreen(viewModel: BuildsScreenViewModel = hiltViewModel()) {
             state = listState
         ) {
             items(uiState.builds) {
-                Text(text = it.title)
+                BuildItem(build = it) {
+                    viewModel.updateUIEvents(event = BuildsUIStateEvents.FavoriteButtonClicked(it))
+                }
             }
         }
     }
