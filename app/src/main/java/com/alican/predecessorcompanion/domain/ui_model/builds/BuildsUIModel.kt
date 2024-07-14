@@ -12,5 +12,7 @@ data class BuildsUIModel(
     val item4Id: Int? = null,
     val item5Id: Int? = null,
     val heroId: Int? = null,
-    val title: String = ""
+    val title: String = "",
+    val buildId: String = "",
+    var isFavorite: Boolean = false
 )

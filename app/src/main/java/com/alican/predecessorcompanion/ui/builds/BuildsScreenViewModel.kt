@@ -5,17 +5,24 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.ui_model.builds.BuildsUIModel
+import com.alican.predecessorcompanion.domain.use_case.builds.AddBuildToSavedUseCase
 import com.alican.predecessorcompanion.domain.use_case.builds.GetBuildsUseCase
+import com.alican.predecessorcompanion.domain.use_case.builds.GetSavedBuildsUseCase
+import com.alican.predecessorcompanion.domain.use_case.builds.RemoveBuildFromSavedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BuildsScreenViewModel @Inject constructor(
-    private val getBuildsUseCase: GetBuildsUseCase
+    private val getBuildsUseCase: GetBuildsUseCase,
+    private val removeBuildFromSavedUseCase: RemoveBuildFromSavedUseCase,
+    private val addBuildToSavedUseCase: AddBuildToSavedUseCase,
+    private val getSavedBuildsUseCase: GetSavedBuildsUseCase
 ) : ViewModel() {
     private val _builds = MutableStateFlow<PagingData<BuildsUIModel>>(PagingData.empty())
     val builds: StateFlow<PagingData<BuildsUIModel>>
@@ -28,6 +35,7 @@ class BuildsScreenViewModel @Inject constructor(
 
     init {
         getBuildsNextPage(1)
+        getSavedBuilds()
     }
 
     fun updateUIEvents(event: BuildsUIStateEvents) {
@@ -37,11 +45,11 @@ class BuildsScreenViewModel @Inject constructor(
             }
 
             is BuildsUIStateEvents.FavoriteButtonClicked -> {
-//                if (event.player.isFavorite) {
-//                    removePlayerFromFavorite(player = event.player)
-//                } else {
-//                    addToFavorite(player = event.player)
-//                }
+                if (event.build.isFavorite) {
+                    removeBuildFromSaved(build = event.build)
+                } else {
+                    addToSaved(build = event.build)
+                }
             }
         }
     }
@@ -64,6 +72,64 @@ class BuildsScreenViewModel @Inject constructor(
                             page = page,
                             isLoading = false
                         )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getSavedBuilds() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getSavedBuildsUseCase.invoke().collect { state ->
+                when (state) {
+                    is UIState.Empty -> {}
+                    is UIState.Error -> {}
+                    is UIState.Loading -> {}
+                    is UIState.Success -> {
+                        val localBuilds = state.response
+                        val remoteBuilds = _uiState.value.builds
+                        val updatedRemoteBuilds = remoteBuilds.map { remoteBuild ->
+                            if (localBuilds.any { localBuilds -> localBuilds.buildId == remoteBuild.buildId }) {
+                                remoteBuild.copy(isFavorite = true)
+                            } else {
+                                remoteBuild.copy(isFavorite = false)
+                            }
+                        }
+                        _uiState.update {
+                            it.copy(
+                                builds = updatedRemoteBuilds
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun addToSaved(build: BuildsUIModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            addBuildToSavedUseCase.invoke(build = build).collect { state ->
+                when (state) {
+                    is UIState.Empty -> {}
+                    is UIState.Error -> {}
+                    is UIState.Loading -> {}
+                    is UIState.Success -> {
+                        build.isFavorite = true
+                    }
+                }
+            }
+        }
+    }
+
+    private fun removeBuildFromSaved(build: BuildsUIModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            removeBuildFromSavedUseCase.invoke(buildId = build.buildId).collect { state ->
+                when (state) {
+                    is UIState.Empty -> {}
+                    is UIState.Error -> {}
+                    is UIState.Loading -> {}
+                    is UIState.Success -> {
+                        build.isFavorite = false
                     }
                 }
             }
