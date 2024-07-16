@@ -13,15 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.alican.museums.utils.noRippleClick
-import com.alican.predecessorcompanion.custom.image.ImageView
-import com.alican.predecessorcompanion.domain.ui_model.heroes.HeroesUIModel
+import com.alican.predecessorcompanion.domain.ui_model.heroes.HeroesStatisticsUIModel
 
 @Composable
 fun HeroesScreen(
-    hero: HeroesUIModel,
+    hero: HeroesStatisticsUIModel,
     onClick: () -> Unit
 ) {
     Card(
@@ -40,18 +38,21 @@ fun HeroesScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ImageView(
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(100.dp),
-                imageUrl = hero.image,
-                contentScale = ContentScale.Crop,
-            )
-            Text(
-                modifier = Modifier.padding(top = 4.dp),
-                text = hero.heroName,
-                maxLines = 1,
-            )
+            hero.heroName?.let {
+                Text(
+                    modifier = Modifier.padding(top = 4.dp),
+                    text = it,
+                    maxLines = 1,
+                )
+            }
+            hero.pickRate?.let {
+                Text(
+                    modifier = Modifier.padding(top = 4.dp),
+                    text = it,
+                    maxLines = 1,
+                )
+            }
+
         }
     }
 }

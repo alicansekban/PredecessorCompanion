@@ -3,6 +3,7 @@ package com.alican.predecessorcompanion.data.remote.repository.heroes
 import com.alican.predecessorcompanion.data.local.entity.HeroesEntity
 import com.alican.predecessorcompanion.data.remote.dataSource.heroes.HeroesLocalDataSource
 import com.alican.predecessorcompanion.data.remote.dataSource.heroes.HeroesRemoteDataSource
+import com.alican.predecessorcompanion.data.remote.response.heroes_statistics.HeroesStatisticsResponse
 import com.alican.predecessorcompanion.domain.mapper.heroes.toEntity
 import com.alican.predecessorcompanion.utils.ResultWrapper
 import kotlinx.coroutines.flow.Flow
@@ -40,5 +41,9 @@ class HeroesRepository @Inject constructor(
                 }
             }
         }
+    }
+
+    suspend fun getHeroesStatistics(timeFrame: String): ResultWrapper<HeroesStatisticsResponse> {
+        return remoteDataSource.getHeroesStatistics(timeFrame = timeFrame)
     }
 }

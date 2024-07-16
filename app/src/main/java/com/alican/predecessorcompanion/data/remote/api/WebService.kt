@@ -52,7 +52,6 @@ interface WebService {
     @GET("dashboard/hero_statistics.json")
     suspend fun getHeroStatistics(
         @Query("time_frame") timeFrame: String,
-        @Query("hero_ids") heroId: String,
     ): HeroesStatisticsResponse
 
     @GET("items.json")
@@ -67,4 +66,5 @@ interface WebService {
     suspend fun getBuilds(
         @Query("page") page: Int,
     ): List<BuildsResponseItem>
+
 }

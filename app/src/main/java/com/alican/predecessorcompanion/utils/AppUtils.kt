@@ -163,3 +163,43 @@ fun LazyListState.isScrollingUp(): Boolean {
     }.value
 }
 
+
+fun getHeroStatisticsFiltersList(): List<HeroStatisticsFilterModel> {
+    return arrayListOf(
+        HeroStatisticsFilterModel(
+            title = "All Time",
+            id = "ALL"
+        ),
+        HeroStatisticsFilterModel(
+            title = "3 Mon",
+            id = "3M"
+        ),
+        HeroStatisticsFilterModel(
+            title = "2 Mon",
+            id = "2M"
+        ),
+        HeroStatisticsFilterModel(
+            title = "1 Mon",
+            id = "1M"
+        ),
+        HeroStatisticsFilterModel(
+            title = "3 Weeks",
+            id = "3W"
+        ),
+        HeroStatisticsFilterModel(
+            title = "2 Weeks",
+            id = "2W"
+        ),
+        HeroStatisticsFilterModel(
+            title = "1 Weeks",
+            id = "1W",
+            isSelected = true
+        ),
+        HeroStatisticsFilterModel(
+            title = "1 Day",
+            id = "1D"
+        ),
+
+        )
+}
+
