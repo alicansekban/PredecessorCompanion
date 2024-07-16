@@ -2,6 +2,8 @@ package com.alican.predecessorcompanion.domain.mapper.heroes
 
 import com.alican.predecessorcompanion.data.local.entity.HeroesEntity
 import com.alican.predecessorcompanion.data.remote.response.heroes.HeroesResponse
+import com.alican.predecessorcompanion.data.remote.response.heroes_statistics.HeroStatisticsItem
+import com.alican.predecessorcompanion.domain.ui_model.heroes.HeroesStatisticsUIModel
 import com.alican.predecessorcompanion.domain.ui_model.heroes.HeroesUIModel
 import com.alican.predecessorcompanion.utils.Constant
 import com.alican.predecessorcompanion.utils.HeroDetail
@@ -52,3 +54,11 @@ fun HeroesEntity.toUIModel(): HeroesUIModel {
     )
 }
 
+fun HeroStatisticsItem.toUIModel(): HeroesStatisticsUIModel {
+    return HeroesStatisticsUIModel(
+        heroName = this.display_name,
+        winRate = this.winrate.toString(),
+        pickRate = this.pickrate.toString(),
+        heroId = this.hero_id.toString()
+    )
+}

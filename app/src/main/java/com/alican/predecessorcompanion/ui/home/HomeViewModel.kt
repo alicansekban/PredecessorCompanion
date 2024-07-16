@@ -3,10 +3,9 @@ package com.alican.predecessorcompanion.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alican.predecessorcompanion.domain.UIState
-import com.alican.predecessorcompanion.domain.use_case.heroes.GetHeroesUseCase
+import com.alican.predecessorcompanion.domain.use_case.heroes.GetHeroesStatisticsUseCase
 import com.alican.predecessorcompanion.domain.use_case.players.SearchPlayersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val searchPlayersUseCase: SearchPlayersUseCase,
-    private val getHeroesUseCase: GetHeroesUseCase
+    private val getHeroesStatisticsUseCase: GetHeroesStatisticsUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUIStateModel())
@@ -28,7 +27,7 @@ class HomeViewModel @Inject constructor(
         )
 
     init {
-        getHeroes()
+        getHeroesStatistics("1W")
     }
 
     fun updateEvent(event: HomeUIStateEvents) {
@@ -46,6 +45,24 @@ class HomeViewModel @Inject constructor(
                 if (event.screenType == ScreenType.HEROES) {
                     _uiState.value = _uiState.value.copy(searchQuery = "", players = emptyList())
                 }
+            }
+
+            is HomeUIStateEvents.FilterSelected -> {
+                val updatedList = _uiState.value.filters.map {
+                    if (it.id == event.selectedFilter.id) {
+                        it.copy(isSelected = true)
+                    } else {
+                        it.copy(isSelected = false)
+                    }
+                }
+                _uiState.value = _uiState.value.copy(
+                    filters = updatedList
+                )
+                getHeroesStatistics(timeFrame = event.selectedFilter.id)
+                /**
+                 * burada servis isteği atılacak seçili filtre ile
+                 * örnek kod getHeroesStatistics(filter = event.selectedFilter)
+                 */
             }
         }
     }
@@ -78,19 +95,25 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getHeroes() {
-        viewModelScope.launch(Dispatchers.IO) {
-            getHeroesUseCase.invoke().collect { uiState ->
-                when (uiState) {
-                    is UIState.Empty -> {}
-                    is UIState.Error -> {}
+    private fun getHeroesStatistics(timeFrame: String) {
+        viewModelScope.launch {
+            getHeroesStatisticsUseCase.invoke(timeFrame = timeFrame).collect { state ->
+                when (state) {
+                    is UIState.Empty -> {
+                        _uiState.value = _uiState.value.copy(isLoading = false)
+                    }
+
+                    is UIState.Error -> {
+                        _uiState.value = _uiState.value.copy(isLoading = false)
+                    }
+
                     is UIState.Loading -> {
                         _uiState.value = _uiState.value.copy(isLoading = true)
                     }
-
                     is UIState.Success -> {
+                        val result = state.response
                         _uiState.value = _uiState.value.copy(
-                            heroes = uiState.response,
+                            heroes = result,
                             isLoading = false
                         )
                     }
@@ -98,4 +121,6 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+
 }

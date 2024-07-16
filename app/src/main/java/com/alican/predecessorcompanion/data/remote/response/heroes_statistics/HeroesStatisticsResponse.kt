@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 data class HeroesStatisticsResponse(
 
 	@Json(name="hero_statistics")
-	val heroStatistics: List<HeroStatisticsItem> = emptyList()
+	val hero_statistics: List<HeroStatisticsItem> = emptyList()
 )
 
 data class HeroStatisticsItem(
@@ -14,43 +14,43 @@ data class HeroStatisticsItem(
 	val kills: Int? = null,
 
 	@Json(name="match_count")
-	val matchCount: Double? = null,
+	val match_count: Double? = null,
 
 	@Json(name="avg_cs")
-	val avgCs: Double? = null,
+	val avg_cs: Double? = null,
 
 	@Json(name="winrate")
 	val winrate: Double? = null,
 
 	@Json(name="avg_performance_score")
-	val avgPerformanceScore: Double? = null,
+	val avg_performance_score: Double? = null,
 
 	@Json(name="display_name")
-	val displayName: String? = null,
+	val display_name: String? = null,
 
 	@Json(name="avg_game_duration")
-	val avgGameDuration: Double? = null,
+	val avg_game_duration: Double? = null,
 
 	@Json(name="avg_damage_taken_from_heroes")
-	val avgDamageTakenFromHeroes: Double? = null,
+	val avg_damage_taken_from_heroes: Double? = null,
 
 	@Json(name="avg_gold")
-	val avgGold: Double? = null,
+	val avg_gold: Double? = null,
 
 	@Json(name="avg_damage_dealt_to_heroes")
-	val avgDamageDealtToHeroes: Double? = null,
+	val avg_damage_dealt_to_heroes: Double? = null,
 
 	@Json(name="assists")
 	val assists: Int? = null,
 
 	@Json(name="avg_kdar")
-	val avgKdar: Double? = null,
+	val avg_kdar: Double? = null,
 
 	@Json(name="winrate_mirrorless")
 	val winrateMirrorless: Double? = null,
 
 	@Json(name="hero_id")
-	val heroId: Int? = null,
+	val hero_id: Int? = null,
 
 	@Json(name="pickrate")
 	val pickrate: Double? = null,
