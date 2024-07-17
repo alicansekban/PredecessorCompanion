@@ -1,4 +1,4 @@
-package com.alican.predecessorcompanion.utils
+package com.alican.predecessorcompanion.custom.drawer
 
 data class HeroStatisticsFilterModel(
     val title: String = "",

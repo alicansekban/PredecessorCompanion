@@ -1,8 +1,8 @@
 package com.alican.predecessorcompanion.ui.home
 
+import com.alican.predecessorcompanion.custom.drawer.HeroStatisticsFilterModel
 import com.alican.predecessorcompanion.domain.ui_model.heroes.HeroesStatisticsUIModel
 import com.alican.predecessorcompanion.domain.ui_model.players.PlayersUIModel
-import com.alican.predecessorcompanion.utils.HeroStatisticsFilterModel
 import com.alican.predecessorcompanion.utils.getHeroStatisticsFiltersList
 
 sealed class HomeUIStateEvents {
