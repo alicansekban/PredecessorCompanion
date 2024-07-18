@@ -24,6 +24,8 @@ moshi = "1.14.0"
 moshiKotlin = "1.14.0"
 moshiKotlinCodegen = "1.13.0"
 navigationCompose = "2.8.0-alpha08"
+pagingCompose = "3.3.0"
+pagingRuntimeKtx = "3.3.0"
 serialization = "1.6.3"
 okhttp = "5.0.0-alpha.2"
 retrofit = "2.9.0"
@@ -38,7 +40,11 @@ androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-com
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-runtime-ktx-v262 = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
+androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomCompiler" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomCompiler" }
