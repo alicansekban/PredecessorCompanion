@@ -47,5 +47,7 @@ data class HeroDetail(
     val heroName: String = "",
     val heroId: String = "",
     val image: String = "",
-    val role: String = ""
+    val role: String = "",
+    val winRate: String = "",
+    val pickRate: String = ""
 )

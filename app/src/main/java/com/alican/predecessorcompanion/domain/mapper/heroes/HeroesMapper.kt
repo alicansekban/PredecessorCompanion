@@ -9,7 +9,7 @@ import com.alican.predecessorcompanion.utils.Constant
 import com.alican.predecessorcompanion.utils.HeroDetail
 
 
-fun HeroesResponse.toUIModel() : HeroesUIModel {
+fun HeroesResponse.toUIModel(): HeroesUIModel {
     return HeroesUIModel(
         heroName = this.display_name ?: "",
         heroId = this.id.toString(),
@@ -24,15 +24,6 @@ fun HeroesResponse.toEntity(): HeroesEntity {
         heroId = this.id.toString(),
         image = (Constant.BASE_URL + this.image),
         role = this.roles?.get(0) ?: ""
-    )
-}
-
-fun HeroesUIModel.toDetailModel(): HeroDetail {
-    return HeroDetail(
-        heroName = this.heroName,
-        heroId = this.heroId,
-        image = this.image,
-        role = this.role
     )
 }
 
@@ -60,5 +51,14 @@ fun HeroStatisticsItem.toUIModel(): HeroesStatisticsUIModel {
         winRate = this.winrate.toString(),
         pickRate = this.pickrate.toString(),
         heroId = this.hero_id.toString()
+    )
+}
+
+fun HeroesStatisticsUIModel.toDetailModel(): HeroDetail {
+    return HeroDetail(
+        heroName = this.heroName ?: "",
+        heroId = this.heroId ?: "",
+        winRate = this.winRate ?: "",
+        pickRate = this.pickRate ?: ""
     )
 }

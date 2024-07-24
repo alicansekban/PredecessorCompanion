@@ -6,9 +6,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,7 +19,9 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
@@ -39,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alican.predecessorcompanion.custom.drawer.CustomModalDrawer
+import com.alican.predecessorcompanion.domain.mapper.heroes.toDetailModel
 import com.alican.predecessorcompanion.ui.home.components.HeroesScreen
 import com.alican.predecessorcompanion.utils.HeroDetail
 import com.alican.predecessorcompanion.utils.noRippleClick
@@ -75,27 +81,41 @@ fun HomeScreen(
         },
         content = {
             Column(modifier = Modifier.fillMaxSize()) {
-                AnimatedVisibility(visible = uiState.screenType == ScreenType.HEROES) {
-                    Icon(imageVector = Icons.Default.Search,
-                        contentDescription = "",
-                        modifier = Modifier.clickable {
-                            viewModel.updateEvent(
-                                event = HomeUIStateEvents.ChangeScreenType(
-                                    screenType = ScreenType.SEARCH
-                                )
-                            )
-                        })
-                }
-                AnimatedVisibility(visible = uiState.screenType == ScreenType.SEARCH) {
-                    Icon(imageVector = Icons.Default.Close,
-                        contentDescription = "Close",
-                        modifier = Modifier
-                            .noRippleClick {
-                                viewModel.updateEvent(HomeUIStateEvents.ChangeScreenType(ScreenType.HEROES))
-                                focusManager.clearFocus()
-                            }
-                            .padding(12.dp)
-                            .align(Alignment.End))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    AnimatedVisibility(visible = uiState.screenType == ScreenType.HEROES) {
+                        Icon(imageVector = Icons.Default.Search,
+                            contentDescription = "",
+                            modifier = Modifier
+                                .clickable {
+                                    viewModel.updateEvent(
+                                        event = HomeUIStateEvents.ChangeScreenType(
+                                            screenType = ScreenType.SEARCH
+                                        )
+                                    )
+                                }
+                                .padding(12.dp))
+                    }
+                    AnimatedVisibility(visible = uiState.screenType == ScreenType.SEARCH) {
+
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                    AnimatedVisibility(visible = uiState.screenType == ScreenType.HEROES) {
+                        Icon(imageVector = Icons.Default.FilterList,
+                            contentDescription = "Filter",
+                            modifier = Modifier
+                                .noRippleClick {
+                                    scope.launch {
+                                        drawerState.open()
+                                    }
+                                    focusManager.clearFocus()
+                                }
+                                .padding(12.dp))
+                    }
                 }
 
                 AnimatedVisibility(visible = uiState.screenType == ScreenType.HEROES) {
@@ -108,10 +128,7 @@ fun HomeScreen(
                             HeroesScreen(
                                 hero = it,
                                 onClick = {
-                                    scope.launch {
-                                        drawerState.open()
-                                    }
-                                    //  onHeroClick(it.toDetailModel())
+                                    onHeroClick(it.toDetailModel())
                                 }
                             )
                         }
@@ -122,36 +139,63 @@ fun HomeScreen(
             AnimatedVisibility(visible = uiState.screenType == ScreenType.SEARCH) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    OutlinedTextField(value = uiState.searchQuery,
-                        maxLines = 1,
-                        onValueChange = {
-                            viewModel.updateEvent(HomeUIStateEvents.UpdateSearchQuery(it))
-                        },
-                        keyboardActions = KeyboardActions(onSearch = {
-                            viewModel.updateEvent(HomeUIStateEvents.OnContinue)
-                        }),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text, imeAction = ImeAction.Search
-                        ),
-                        modifier = Modifier
+                    Row(
+                        Modifier
                             .fillMaxWidth()
-                            .focusRequester(focusRequester),
-                        shape = RoundedCornerShape(20.dp),
-                        trailingIcon = {
-                            Icon(imageVector = Icons.Default.Close,
-                                contentDescription = "Close",
-                                modifier = Modifier
-                                    .clickable {
-                                        viewModel.updateEvent(HomeUIStateEvents.UpdateSearchQuery(""))
-                                    }
-                                    .padding(12.dp)
-                                    .align(Alignment.End))
-                        },
-                        label = { Text(text = "Search") })
+                            .wrapContentHeight()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBackIosNew,
+                            contentDescription = "Close",
+                            modifier = Modifier
+                                .padding(end = 8.dp)
+                                .noRippleClick {
+                                    viewModel.updateEvent(
+                                        HomeUIStateEvents.ChangeScreenType(
+                                            ScreenType.HEROES
+                                        )
+                                    )
+                                    focusManager.clearFocus()
+                                }
+                                .align(Alignment.CenterVertically)
+                        )
+                        OutlinedTextField(
+                            value = uiState.searchQuery,
+                            maxLines = 1,
+                            onValueChange = {
+                                viewModel.updateEvent(HomeUIStateEvents.UpdateSearchQuery(it))
+                            },
+                            keyboardActions = KeyboardActions(onSearch = {
+                                viewModel.updateEvent(HomeUIStateEvents.OnContinue)
+                            }),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Text, imeAction = ImeAction.Search
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .focusRequester(focusRequester),
+                            shape = RoundedCornerShape(20.dp),
+                            trailingIcon = {
+                                Icon(imageVector = Icons.Default.Close,
+                                    contentDescription = "Close",
+                                    modifier = Modifier
+                                        .clickable {
+                                            viewModel.updateEvent(
+                                                HomeUIStateEvents.UpdateSearchQuery(
+                                                    ""
+                                                )
+                                            )
+                                        }
+                                        .padding(12.dp))
+                            },
+                            label = { Text(text = "Search") }
+                        )
+                    }
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -182,5 +226,3 @@ fun HomeScreen(
         }
     )
 }
-
-
