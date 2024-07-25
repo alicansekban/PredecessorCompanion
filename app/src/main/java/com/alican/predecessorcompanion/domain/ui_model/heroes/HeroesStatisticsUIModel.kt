@@ -4,5 +4,5 @@ data class HeroesStatisticsUIModel(
     val heroName: String? = null,
     val winRate: String? = null,
     val pickRate: String? = null,
-    val heroId: String? = null
+    val heroId: String? = null,
 )

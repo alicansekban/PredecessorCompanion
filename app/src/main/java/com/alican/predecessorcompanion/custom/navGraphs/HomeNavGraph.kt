@@ -39,6 +39,6 @@ fun NavGraphBuilder.homeNavGraph(
 
     composable<HeroDetail> {
         val args = it.toRoute<HeroDetail>()
-        HeroDetailScreen(heroDetail = args)
+        HeroDetailScreen(heroDetail = args, onBackClick = { navController.navigateUp() })
     }
 }

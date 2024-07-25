@@ -13,6 +13,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -59,6 +63,7 @@ fun HomeScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val lazyGridState = rememberLazyGridState()
 
     val focusRequester = FocusRequester()
     val focusManager = LocalFocusManager.current
@@ -100,9 +105,7 @@ fun HomeScreen(
                                 }
                                 .padding(12.dp))
                     }
-                    AnimatedVisibility(visible = uiState.screenType == ScreenType.SEARCH) {
 
-                    }
                     Spacer(modifier = Modifier.weight(1f))
                     AnimatedVisibility(visible = uiState.screenType == ScreenType.HEROES) {
                         Icon(imageVector = Icons.Default.FilterList,
@@ -119,16 +122,17 @@ fun HomeScreen(
                 }
 
                 AnimatedVisibility(visible = uiState.screenType == ScreenType.HEROES) {
-                    Column(
+                    LazyVerticalGrid(
+                        state = lazyGridState,
                         modifier = Modifier
-                            .padding(16.dp)
-                            .verticalScroll(rememberScrollState())
+                            .padding(16.dp), columns = GridCells.Fixed(3)
+
                     ) {
-                        uiState.heroes.sortedByDescending { it.pickRate }.forEach {
+                        items(uiState.heroes) { hero ->
                             HeroesScreen(
-                                hero = it,
+                                hero = hero,
                                 onClick = {
-                                    onHeroClick(it.toDetailModel())
+                                    onHeroClick(hero.toDetailModel())
                                 }
                             )
                         }
