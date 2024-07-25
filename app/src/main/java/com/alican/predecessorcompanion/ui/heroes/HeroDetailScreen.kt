@@ -52,7 +52,11 @@ fun HeroDetailScreen(
 
             ) {
             ImageView(
-                imageUrl = heroDetail.heroImage, modifier = Modifier.size(120.dp)
+                imageUrl = heroDetail.heroImage, modifier = Modifier
+                    .size(120.dp)
+                    .clip(
+                        RoundedCornerShape(50)
+                    )
             )
 
             Column(

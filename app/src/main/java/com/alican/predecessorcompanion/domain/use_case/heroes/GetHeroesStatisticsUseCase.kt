@@ -26,9 +26,9 @@ class GetHeroesStatisticsUseCase @Inject constructor(
                     ResultWrapper.NetworkError -> UIState.Error(errorMessage = "Network Error")
                     is ResultWrapper.Success -> {
                         val heroes = result.value.hero_statistics.map { hero ->
-                            val heroImageUrl =
-                                heroesRepository.getHeroDetail(heroId = hero.hero_id.toString()).image
-                            hero.toUIModel(heroImageUrl = heroImageUrl)
+                            val heroDetails =
+                                heroesRepository.getHeroDetail(heroId = hero.hero_id.toString())
+                            hero.toUIModel(heroDetails = heroDetails)
                         }
                         UIState.Success(heroes)
                     }

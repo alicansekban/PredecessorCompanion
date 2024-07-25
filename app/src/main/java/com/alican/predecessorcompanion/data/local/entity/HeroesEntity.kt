@@ -9,5 +9,5 @@ data class HeroesEntity(
     val heroId: String = "",
     val heroName: String = "",
     val image: String = "",
-    val role: String = ""
+    val role: String = "",
 )

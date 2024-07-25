@@ -45,13 +45,14 @@ fun HeroesEntity.toUIModel(): HeroesUIModel {
     )
 }
 
-fun HeroStatisticsItem.toUIModel(heroImageUrl: String): HeroesStatisticsUIModel {
+fun HeroStatisticsItem.toUIModel(heroDetails: HeroesEntity): HeroesStatisticsUIModel {
     return HeroesStatisticsUIModel(
         heroName = this.display_name,
         winRate = this.winrate.toString(),
         pickRate = this.pickrate.toString(),
         heroId = this.hero_id.toString(),
-        heroImageUrl = heroImageUrl
+        heroImageUrl = heroDetails.image,
+        role = heroDetails.role
     )
 }
 
@@ -61,6 +62,7 @@ fun HeroesStatisticsUIModel.toDetailModel(): HeroDetail {
         heroId = this.heroId ?: "",
         winRate = this.winRate ?: "",
         pickRate = this.pickRate ?: "",
-        heroImage = this.heroImageUrl ?: ""
+        heroImage = this.heroImageUrl ?: "",
+        role = this.role ?: ""
     )
 }
