@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alican.predecessorcompanion.domain.UIState
 import com.alican.predecessorcompanion.domain.use_case.heroes.GetHeroesStatisticsUseCase
+import com.alican.predecessorcompanion.domain.use_case.heroes.GetHeroesUseCase
 import com.alican.predecessorcompanion.domain.use_case.players.SearchPlayersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val searchPlayersUseCase: SearchPlayersUseCase,
-    private val getHeroesStatisticsUseCase: GetHeroesStatisticsUseCase
+    private val getHeroesStatisticsUseCase: GetHeroesStatisticsUseCase,
+    private val getHeroesUseCase: GetHeroesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUIStateModel())
@@ -27,7 +30,7 @@ class HomeViewModel @Inject constructor(
         )
 
     init {
-        getHeroesStatistics("1W")
+        getHeroes()
     }
 
     fun updateEvent(event: HomeUIStateEvents) {
@@ -82,6 +85,7 @@ class HomeViewModel @Inject constructor(
                     is UIState.Loading -> {
                         _uiState.value = _uiState.value.copy(isLoading = true)
                     }
+
                     is UIState.Success -> {
                         val result = state.response
                         _uiState.value = _uiState.value.copy(
@@ -95,8 +99,32 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private fun getHeroes() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getHeroesUseCase.invoke().collect { state ->
+                when (state) {
+                    is UIState.Empty -> {}
+                    is UIState.Error -> {
+                        _uiState.value = _uiState.value.copy(isLoading = false)
+
+                    }
+
+                    is UIState.Loading -> {
+                        _uiState.value = _uiState.value.copy(isLoading = true)
+
+                    }
+
+                    is UIState.Success -> {
+                        getHeroesStatistics("1W")
+
+                    }
+                }
+            }
+        }
+    }
+
     private fun getHeroesStatistics(timeFrame: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getHeroesStatisticsUseCase.invoke(timeFrame = timeFrame).collect { state ->
                 when (state) {
                     is UIState.Empty -> {
@@ -110,6 +138,7 @@ class HomeViewModel @Inject constructor(
                     is UIState.Loading -> {
                         _uiState.value = _uiState.value.copy(isLoading = true)
                     }
+
                     is UIState.Success -> {
                         val result = state.response
                         _uiState.value = _uiState.value.copy(

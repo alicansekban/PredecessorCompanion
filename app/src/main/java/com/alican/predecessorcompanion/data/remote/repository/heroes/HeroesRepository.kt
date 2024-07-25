@@ -16,34 +16,35 @@ class HeroesRepository @Inject constructor(
 ) {
     suspend fun getHeroes(): Flow<ResultWrapper<List<HeroesEntity>>> {
         return flow {
-            val localHeroes = localDataSource.getHeroes()
-            if (localHeroes.isNotEmpty()) {
-                emit(ResultWrapper.Success(localHeroes))
-            } else {
-                when (val apiData = remoteDataSource.getHeroes()) {
-                    is ResultWrapper.GenericError -> {
-                        emit(ResultWrapper.GenericError())
-                    }
+            when (val apiData = remoteDataSource.getHeroes()) {
+                is ResultWrapper.GenericError -> {
+                    emit(ResultWrapper.GenericError())
+                }
 
-                    ResultWrapper.Loading -> {
-                        emit(ResultWrapper.Loading)
-                    }
+                ResultWrapper.Loading -> {
+                    emit(ResultWrapper.Loading)
+                }
 
-                    ResultWrapper.NetworkError -> {
-                        emit(ResultWrapper.NetworkError)
-                    }
+                ResultWrapper.NetworkError -> {
+                    emit(ResultWrapper.NetworkError)
+                }
 
-                    is ResultWrapper.Success -> {
-                        val response = apiData.value
-                        localDataSource.insertHeroes(response.map { it.toEntity() })
-                        ResultWrapper.Success(localDataSource.getHeroes())
-                    }
+                is ResultWrapper.Success -> {
+                    val response = apiData.value
+                    localDataSource.insertHeroes(response.map { it.toEntity() })
+                    emit(ResultWrapper.Success(localDataSource.getHeroes()))
                 }
             }
+
         }
     }
 
     suspend fun getHeroesStatistics(timeFrame: String): ResultWrapper<HeroesStatisticsResponse> {
         return remoteDataSource.getHeroesStatistics(timeFrame = timeFrame)
     }
+
+    fun getHeroDetail(heroId: String): HeroesEntity {
+        return localDataSource.getHeroDetail(heroId = heroId)
+    }
+
 }
